@@ -1,14 +1,15 @@
+
+## First release of my fork of MillMix that replaces a patch that I posted on Millénaire discord. (bansoukou patch)
 Changelog
 [1.0.5] - 2025-07-04
+### fixes :
 * Removed some log spam 
   * ERROR : Could not find a villager type to create
 * Fixed pathfinding (cauldron fix)
 
 [1.0.4] - 2025-07-04
-## First release of my fork of MillMix that replaces a patch that I posted on Millénaire discord. (bansoukou patch)
-
 ### Features :
-* Rework of farming feature that makes them wait for crops to get ripe
+* Rework of farming feature that makes them wait for crops to get ripe [DESC TO BE REDONE DONT READ THAT SHIT]
  * **NEW FEATURE** : they will harvest even if some soil blocks are missing (so if some blocks get sucked out by a tornado, they still harvest what remains :D)
     - **FIXED** : they will now finish harvest crops even if farm field is smaller that 64 they won't leave any wheat normally.
 - This mod includes **MillMix**
@@ -21,7 +22,7 @@ Changelog
 
 ## Prerequisites :
 - MixinBooter `curseforge.com/minecraft/mc-mods/mixin-booter/files/all?page=1&pageSize=20`  (you may already have it installed if you have some mods)
-### if you previously installed my patch
+### if you previously installed my patch that includes bansoukou
 - Remove Bansoukou and `/minecraft/bansoukou`   (if you don't use it for another things)
 - Remove any old MillMix 1.0.2 or 1.0.3 (since it replaces it)
 
