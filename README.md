@@ -1,5 +1,7 @@
 
 ## First release of my fork of MillMix that replaces a patch that I posted on Millénaire discord. (bansoukou patch)
+It is a fork of Victimarius/millmix.
+
 Changelog
 [1.0.5] - 2025-07-04
 ### fixes :
