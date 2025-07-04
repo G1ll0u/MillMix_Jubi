@@ -1,12 +1,10 @@
 package com.jubitus.millmix.mixin;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.millenaire.common.annotedparameters.AnnotedParameter;
 import org.millenaire.common.entity.MillVillager;
 import org.millenaire.common.goal.Goal;
 import org.millenaire.common.goal.generic.GoalGenericHarvestCrop;
@@ -17,7 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(GoalGenericHarvestCrop.class) // The class I want to modify
@@ -37,9 +34,6 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
     protected abstract boolean isValidHarvestSoil(World world, Point p);
     @Shadow(remap = false)
     public ResourceLocation cropType = null;
-    @Shadow(remap = false)
-    public List<AnnotedParameter.BonusItem> harvestItem = new ArrayList();
-
 
     /**
      * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
@@ -54,7 +48,7 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
         for(Building buildingDest : this.getBuildings(villager)) {
             List<Point> soils;
             if (this.isDestPossible(villager, buildingDest) && (soils = buildingDest.getResManager().getSoilPoints(this.cropType)) != null && !soils.isEmpty()) {
-                boolean isSmallField = soils.size() < 200;
+                boolean isSmallField = soils.size() < 64;
                 float minStartPercent = isSmallField ? 0.99F : 0.9F;
                 float minContinuePercent = isSmallField ? 0.01F : 0.03F;
                 int existingSoilCount = 0;
@@ -63,11 +57,6 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
 
                 for (Point p : soils) {
                     if (this.soilExistsAt(villager.world, p)) {
-                        // Skip soil with no crop above (invalidate)
-                        if (!hasCropAbove(villager.world, p)) {
-                            continue;
-                        }
-
                         ++existingSoilCount;
 
                         if (this.isValidHarvestSoil(villager.world, p)) {
@@ -94,24 +83,6 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
 
         return dest == null ? null : this.packDest(dest, destBuilding);
     }
-    /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
-     * @author Jubitus
-     * @reason Make villagers wait for crops to get ripe
-     */
-    @Overwrite(remap = false)
-    public void applyDefaultSettings() {
-        this.duration = 10;
-        this.lookAtGoal = true;
-        this.reoccurDelay = 15000;
-        this.tags.add("tag_agriculture");
-    }
-    private boolean hasCropAbove(World world, Point p) {
-        Block blockAbove = p.getAbove().getBlock(world);
-        // Check if blockAbove is air (no crop)
-        return blockAbove != Blocks.AIR;
-    }
-
 }
 
 

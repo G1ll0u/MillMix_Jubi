@@ -1,6 +1,5 @@
 package com.jubitus.millmix.mixin;
 
-
 import org.millenaire.common.config.MillConfigParameter;
 import org.millenaire.common.config.MillConfigValues;
 import org.millenaire.common.utilities.MillLog;
@@ -16,7 +15,7 @@ import static org.millenaire.common.config.MillConfigValues.*;
 
 public class MixinMillConfigValues {
     /**
-     * idea: TODO
+     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
      *
      * @author Jubitus
      * @reason add config values
@@ -24,7 +23,7 @@ public class MixinMillConfigValues {
     @Overwrite(remap = false)
     private static void initConfigItems() {
         try {
-            ArrayList<MillConfigParameter> configSection = new ArrayList<>();
+            ArrayList<MillConfigParameter> configSection = new ArrayList<MillConfigParameter>();
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("fallback_language"), "fallback_language", "en", "fr"));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("languageLearning"), "language_learning", new Object[0]));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("TRAVEL_BOOK_LEARNING"), "travel_book_learning", new Object[0]));
@@ -60,7 +59,6 @@ public class MixinMillConfigValues {
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("BackgroundRadius"), "background_radius", 0, 200, 500, 1000, 1500, 2000, 2500, 3000));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("BanditRaidRadius"), "bandit_raid_radius", 0, 200, 500, 1000, 1500, 2000));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("RaidingRate"), "raiding_rate", 0, 10, 20, 50, 100));
-
             configPages.add(configSection);
             configPageTitles.add("config.page.villagebehaviour");
             configPageDesc.add("config.page.villagebehaviour.desc");
@@ -112,7 +110,6 @@ public class MixinMillConfigValues {
             configSection = new ArrayList();
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("bonusCode"), "bonus_code", 6).setMaxStringLength(4));
             configPages.add(configSection);
-
             configPageTitles.add("config.page.bonus");
             configPageDesc.add("config.page.bonus.desc");
             for (List<MillConfigParameter> aConfigPage : configPages) {
@@ -120,10 +117,9 @@ public class MixinMillConfigValues {
                     configParameters.put(config.key, config);
                 }
             }
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             MillLog.error(null, "Exception when initialising config items: " + e);
         }
-
     }
 }

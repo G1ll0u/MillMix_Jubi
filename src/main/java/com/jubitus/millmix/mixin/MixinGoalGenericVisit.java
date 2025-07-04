@@ -26,50 +26,41 @@ public abstract class MixinGoalGenericVisit extends MixinGoalGeneric {
     @ConfigAnnotations.ConfigField(type = AnnotedParameter.ParameterType.BOOLEAN, defaultValue = "false")
     @ConfigAnnotations.FieldDocumentation(explanation = "If true, the villager will swing their arm when performing the action.")
     public boolean doSwingArms = false;
-    @ConfigAnnotations.ConfigField(
-            type = AnnotedParameter.ParameterType.BOOLEAN,
-            defaultValue = "false"
-    )
-    @ConfigAnnotations.FieldDocumentation(
-            explanation = "If true, villager does this goal sit."
-    )
-
-    @Shadow(remap = false)
+    @Shadow(remap=false)
     public List<String> targetVillagerGoals = null;
     @Shadow(remap = false)
     public AnnotedParameter.PosType targetPosition;
-
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
-     *
-     * @author Jubitus
-     * @reason Tweak Lumberman goal
-     */
-    @Overwrite(remap = false)
-    public Goal.GoalInformation getDestination(MillVillager villager) throws Exception {
-        if (this.targetVillagerGoals != null) {
-            ArrayList<MillVillager> targets = new ArrayList<MillVillager>();
-            for (MillVillager v : villager.getTownHall().getKnownVillagers()) {
-                if (v == villager || v.goalKey == null || !this.isValidGoalForTargetting(v.goalKey)) continue;
-                targets.add(v);
-            }
-            if (targets.isEmpty()) {
-                return null;
-            }
-            return this.packDest(null, null, (Entity) targets.get(MillCommonUtilities.randomInt(targets.size())));
+ * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+ *
+ * @author Jubitus
+ * @reason Tweak Lumberman goal
+ */
+@Overwrite(remap = false)
+public Goal.GoalInformation getDestination(MillVillager villager) throws Exception {
+    if (this.targetVillagerGoals != null) {
+        ArrayList<MillVillager> targets = new ArrayList<MillVillager>();
+        for (MillVillager v : villager.getTownHall().getKnownVillagers()) {
+            if (v == villager || v.goalKey == null || !this.isValidGoalForTargetting(v.goalKey)) continue;
+            targets.add(v);
         }
-        List<Building> buildings = this.getBuildings(villager);
-        for (Building dest : buildings) {
-            if (!this.isDestPossible(villager, dest)) continue;
-            Point basePos = this.targetPosition.getPosition(dest);
-            int range = this.randomOffset * 2 + 1;
-            int offsetX = basePos.getiX() + (MillCommonUtilities.randomInt(range) - this.randomOffset);
-            int offsetZ = basePos.getiZ() + (MillCommonUtilities.randomInt(range) - this.randomOffset);
-            Point offsetPos = new Point(offsetX, basePos.getiY(), offsetZ);
-            return this.packDest(offsetPos, dest);
+        if (targets.isEmpty()) {
+            return null;
         }
-        return null;
+        return this.packDest(null, null, (Entity)targets.get(MillCommonUtilities.randomInt(targets.size())));
     }
+    List<Building> buildings = this.getBuildings(villager);
+    for (Building dest : buildings) {
+        if (!this.isDestPossible(villager, dest)) continue;
+        Point basePos = this.targetPosition.getPosition(dest);
+        int range = this.randomOffset * 2 + 1;
+        int offsetX = basePos.getiX() + (MillCommonUtilities.randomInt(range) - this.randomOffset);
+        int offsetZ = basePos.getiZ() + (MillCommonUtilities.randomInt(range) - this.randomOffset);
+        Point offsetPos = new Point(offsetX, basePos.getiY(), offsetZ);
+        return this.packDest(offsetPos, dest);
+    }
+    return null;
+}
 
     private boolean isValidGoalForTargetting(String goalKey) {
         if (this.targetVillagerGoals == null) {

@@ -7,14 +7,10 @@ import org.millenaire.common.village.Building;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //class that helps me
 @Mixin(Goal.class) // The class I want to modify
 public abstract class MixinGoal {
-@Shadow(remap = false)
-public boolean travelBookShow = true;
+
     @Shadow(remap = false)
     protected abstract Goal.GoalInformation packDest(Point p, Building b);
 
@@ -23,6 +19,4 @@ public boolean travelBookShow = true;
 
     @Shadow(remap = false)
     protected abstract Goal.GoalInformation packDest(Point p);
-    @Shadow(remap = false)
-    public List<String> tags = new ArrayList<String>();
 }

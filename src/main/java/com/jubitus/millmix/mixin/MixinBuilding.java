@@ -14,29 +14,21 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
 import java.util.Map;
 
 @Mixin(Building.class)
 public abstract class MixinBuilding {
     @Shadow(remap = false)
     public abstract Map<Long, VillagerRecord> getVillagerRecords();
-
-    @Shadow(remap = false)
-    public MillWorldData mw;
-
-    @Shadow(remap = false)
-    public abstract List<Building> getBuildings();
-
+@Shadow(remap = false)
+public MillWorldData mw;
     @Shadow(remap = false)
     public BuildingLocation location;
-
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
-     *
-     * @author Jubitus
-     * @reason Make villagers wait for crops to get ripe
-     */
+         * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+         * @author Jubitus
+         * @reason Make villagers wait for crops to get ripe
+         */
     @Inject(
             method = "addAdult",
             at = @At(
@@ -54,7 +46,7 @@ public abstract class MixinBuilding {
             MillLog.error(this, "Villager types: " + (child.gender == 1 ? MillCommonUtilities.flattenStrings(this.location.getMaleResidents()) : MillCommonUtilities.flattenStrings(this.location.getFemaleResidents())));
             MillLog.error(this, "Villager types: " + (child.gender == 1 ? MillCommonUtilities.flattenStrings(this.location.getMaleResidents()) : MillCommonUtilities.flattenStrings(this.location.getFemaleResidents())));
             String s = "";
-            for (VillagerRecord vr : this.getVillagerRecords().values()) {
+            for(VillagerRecord vr : this.getVillagerRecords().values()) {
                 s = s + vr.type + " ";
             }
 
@@ -66,3 +58,4 @@ public abstract class MixinBuilding {
         ci.cancel();
     }
 }
+
