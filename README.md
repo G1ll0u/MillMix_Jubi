@@ -2,16 +2,8 @@
 ## First release of my fork of MillMix that replaces a patch that I posted on Millénaire discord. (bansoukou patch)
 It is a fork of Victimarius/millmix.
 
-Changelog
-[1.0.5] - 2025-07-04
-### fixes :
-* Removed some log spam 
-  * ERROR : Could not find a villager type to create
-* Fixed pathfinding (cauldron fix)
-
-[1.0.4] - 2025-07-04
-### Features :
-* Rework of farming feature that makes them wait for crops to get ripe [DESC TO BE REDONE DONT READ THAT SHIT]
+### Features [needs rewrite] :
+* Rework of farming feature that makes them wait for crops to get ripe 
  * **NEW FEATURE** : they will harvest even if some soil blocks are missing (so if some blocks get sucked out by a tornado, they still harvest what remains :D)
     - **FIXED** : they will now finish harvest crops even if farm field is smaller that 64 they won't leave any wheat normally.
 - This mod includes **MillMix**
