@@ -1,5 +1,5 @@
 
-# Fork of [Victimarius/millmix](https://github.com/Victimarius/millmix) that fixes and tweak even more things in Millénaire 1.12.2 mod making it more immersive.
+# Fork of [Victimarius/millmix](https://github.com/Victimarius/millmix) that fixes and tweaks even more things in Millénaire 1.12.2 mod making it more immersive.
 This is my first mod ! :D
 
 ## Description
@@ -33,11 +33,15 @@ It won't break your save but please **make backups**
 There still aren't other goal tweaks I talked about some times ago on Millénaire Discord such as guards actually patrolling or farmer children. At the moment, my mod just patches bits of game code, not culture related files like goals.txt. I will do, but I want to do it cleanly.
 Also, note that I didn't test all tweaks. Please report it here on issues or in the millenaire discord #jubitus.
 
-Millenaire discord 
+### Millenaire website
+https://millenaire.org/
+### Millenaire discord 
 https://discord.gg/nCXjd4s
 
-Thanks to Victimarius for [MillMix](https://github.com/Victimarius/millmix)
+Thanks to :  
+    @Victimarius
     @mouse0w0
     @Victimarius
     @mchorse
     @TudbuT
+for [MillMix](https://github.com/Victimarius/millmix)
