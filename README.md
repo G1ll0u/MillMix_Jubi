@@ -44,36 +44,3 @@ It won't break your save but please make backups
 
 There still aren't other goal tweaks I talked about some times ago on Millénaire Discord such as guards patrolling or farmer children. At the moment, my mod just patches bits of game code, not culture related files like goals.txt.
 Also, note that I didn't test all tweaks for the forge version so if you see that features are missing, report it here.
-
-# what is cleanroom loader ?
-
-- The forge 1.12.2 continuation that runs forge 1.12.2 on recent Java21+ and lwjgl3, keeping 99% mods compatibility.
-It makes loading times really faster, it allows modders to make more "modern ?" mods or at least use modern dev environment to dev.
-So if you don't know how to install cleanroom :
-you should first read : `github.com/CleanroomMC/Cleanroom`
-
-java 21+ :
-adoptium.net/temurin/releases/?arch=x64&package=jre
-Server start script recommended for Cleanroom :
-`github.com/jchung01/Cleanroom-ServerStart-Scripts/`
-
-You'll probably encounter problems if you're using old/weird mods while migrating your modpack to Cleanroom. You have to ensure you're using mods that are updated. Some old mods have been forked for being compatible for Cleanroom like Had Enough Items (that replaces Just Enough Items).
-(had enough items also replaces Just Enough Items in forge 1.12.2 iirc)
-Check your logs :D
-
-If you're stuck while Cleanroom migration there is a Cleanroom discord where you can ask help.
-
-## I used TemplateDevEnv
-
-### Instructions:
-
-1. Click `use this template` at the top.
-2. Clone the repository that you have created with this template to your local machine.
-3. Make sure IDEA is using Java 21 for Gradle before you sync the project. Verify this by going to IDEA's `Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JVM`.
-4. Open the project folder in IDEA. When prompted, click "Load Gradle Project" as it detects the `build.gradle`, if you weren't prompted, right-click the project's `build.gradle` in IDEA, select `Link Gradle Project`, after completion, hit `Refresh All` in the gradle tab on the right.
-5. Run gradle tasks such as `runClient` and `runServer` in the IDEA gradle tab, or use the auto-imported run configurations like `1. Run Client`.
-
-### Notes:
-- Dependencies script in [gradle/scripts/dependencies.gradle](gradle/scripts/dependencies.gradle), explanations are commented in the file.
-- Publishing script in [gradle/scripts/publishing.gradle](gradle/scripts/publishing.gradle).
-- When writing Mixins on IntelliJ, it is advisable to use latest [MinecraftDev Fork for RetroFuturaGradle](https://github.com/eigenraven/MinecraftDev/releases).
