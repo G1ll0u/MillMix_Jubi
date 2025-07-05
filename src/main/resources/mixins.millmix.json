@@ -1,20 +1,22 @@
 {
-	"required": true,
-	"package": "com.jubitus.millmix.mixin",
-	"compatibilityLevel": "JAVA_8",
-	"target": "@env(DEFAULT)",
-	"mixins": [
-		"MixinAStar",
-		"MixinBuilding",
-		"MixinGoal",
-		"MixinGoalGeneric",
-		"MixinGoalGenericHarvestCrop",
-		"MixinGoalGenericVisit",
-		"MixinGoalLumbermanChopTrees",
-		"MixinMillConfigValues",
-		"MixinMillVillager"
-	],
-	"server": [],
-	"setSourceFile": true,
-	"minVersion": "0.8.5"
+  "required": true,
+  "package": "com.jubitus.millmix.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "mixins": [
+    "MixinAStar",
+    "MixinBuilding",
+    "MixinGenerateVillage",
+    "MixinGoal",
+    "MixinGoalGeneric",
+    "MixinGoalGenericHarvestCrop",
+    "MixinGoalGenericPlantCrop",
+    "MixinGoalGenericVisit",
+    "MixinGoalLumbermanChopTrees",
+    "MixinMillConfigValues",
+    "MixinMillVillager"
+  ],
+  "server": [],
+  "setSourceFile": true,
+  "minVersion": "0.8.5"
 }
