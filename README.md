@@ -3,6 +3,19 @@
 It is a fork of Victimarius/millmix.
 
 ### Features [needs rewrite] :
+| Target                    | Feature                                                                                  | Status                                     | Note                                                                                             |   |
+|---------------------------|------------------------------------------------------------------------------------------|--------------------------------------------|--------------------------------------------------------------------------------------------------|---|
+| Harvest goal              | Makes villagers wait for crops to be ripe                                                | Implemented                                |                                                                                                  |   |
+|                           | Make villagers ignore missing soil                                                       | Implemented                                | if some soil blocks are missing, it won't prevent villagers to harvest the remaining             |   |
+|                           | Finish small farms                                                                       | Implemented                                | If the farm is small enough, they'll totally finish harvest it                                   |   |
+| How millvillager works    | Include all MillMix fixes :                                                              | Imoplemented                               |                                                                                                  |   |
+|                           | Makes villager toggledoor compatible with MalisisDoors                                   | Implemented but to be tested (should work) |                                                                                                  |   |
+|                           | Prevent millagers warping to the player if attacked                                      | Implemented but to be tested (should work) |                                                                                                  |   |
+|                           | Prevent player toggling seller ui if right clicking on millvillager while fighting       | Implemented but to be tested (should work) |                                                                                                  |   |
+| Lumberman Chop trees goal | Makes chop trees radius bigger                                                           | Implemented but need some user feedback    |                                                                                                  |   |
+| GenericVisit goal         | Adds a random offset where the villager goes for visit goals like patrol or godrinkcider | Implemented                                | Makes villagers cluster less so it's more immersive                                              |   |
+| Adjust config values      | Allows higher [STUPIDLY DANGEROUS] config settings for "M" in-game menu                  | Implemented                                | DON'T MESS WITH VILLAGE RADIUS, 100 IS OK LOL (up to 2000 with my mod iirc)                      |   |
+|                           | Allow to set villager names distance to 0                                                | Implemented                                | Allows to totally hide villagers directly in-game (avoids to edit config-custom.txt and restart) |   |
 * Rework of farming feature that makes them wait for crops to get ripe 
  * **NEW FEATURE** : they will harvest even if some soil blocks are missing (so if some blocks get sucked out by a tornado, they still harvest what remains :D)
     - **FIXED** : they will now finish harvest crops even if farm field is smaller that 64 they won't leave any wheat normally.
