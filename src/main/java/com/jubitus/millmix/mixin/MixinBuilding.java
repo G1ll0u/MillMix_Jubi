@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @Mixin(Building.class)
 public abstract class MixinBuilding {

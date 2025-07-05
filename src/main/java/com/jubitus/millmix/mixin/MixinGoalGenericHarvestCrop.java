@@ -1,13 +1,18 @@
 package com.jubitus.millmix.mixin;
 
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.millenaire.common.annotedparameters.AnnotedParameter;
 import org.millenaire.common.entity.MillVillager;
 import org.millenaire.common.goal.Goal;
 import org.millenaire.common.goal.generic.GoalGenericHarvestCrop;
+import org.millenaire.common.item.InvItem;
+import org.millenaire.common.utilities.MillCommonUtilities;
 import org.millenaire.common.utilities.MillLog;
 import org.millenaire.common.utilities.Point;
 import org.millenaire.common.village.Building;
@@ -15,6 +20,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(GoalGenericHarvestCrop.class) // The class I want to modify
@@ -34,6 +40,9 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
     protected abstract boolean isValidHarvestSoil(World world, Point p);
     @Shadow(remap = false)
     public ResourceLocation cropType = null;
+    @Shadow(remap = false)
+    public List<AnnotedParameter.BonusItem> harvestItem = new ArrayList();
+
 
     /**
      * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
@@ -82,6 +91,18 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
         }
 
         return dest == null ? null : this.packDest(dest, destBuilding);
+    }
+    /**
+     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * @author Jubitus
+     * @reason Make villagers wait for crops to get ripe
+     */
+    @Overwrite(remap = false)
+    public void applyDefaultSettings() {
+        this.duration = 10;
+        this.lookAtGoal = true;
+        this.reoccurDelay = 15000;
+        this.tags.add("tag_agriculture");
     }
 }
 
