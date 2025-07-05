@@ -3,7 +3,7 @@
 This is my first mod ! :D
 
 ## Description
-It's a mod that patches Millenaire 8.x.x on 1.12.2 with mixins, making it more immersive. I forked it from victimarius/millmix.
+It's a mod that patches [Millenaire 8.x.x on 1.12.2](https://www.curseforge.com/minecraft/mc-mods/millenaire) with mixins, making it more immersive. I forked it from victimarius/millmix.
 
 ### Current features :
 | Target                        | Feature                                                                                                  | Status                                     | Note                                                                                                                |   |
@@ -38,10 +38,13 @@ https://millenaire.org/
 ### Millenaire discord 
 https://discord.gg/nCXjd4s
 
-Thanks to :  
-    @Victimarius
-    @mouse0w0
-    @Victimarius
-    @mchorse
-    @TudbuT
+### Thanks to
+Victimarius
+mouse0w0
+Victimarius
+mchorse
+TudbuT
 for [MillMix](https://github.com/Victimarius/millmix)
+
+
+Have a nice day
