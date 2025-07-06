@@ -23,7 +23,7 @@ It's a mod that patches [Millenaire 8.x.x on 1.12.2](https://www.curseforge.com/
 | **Log fix**                   | Made the error `Could not find a villager type to create. Gender: 2` silent since it dont break the game | Implemented                                | It fixes a shitty error that flood millenaire.log with errors, preventing millenaire.log polluting hard drive space and health    |
 
 ## Prerequisites
-- MixinBooter `curseforge.com/minecraft/mc-mods/mixin-booter/files/all?page=1&pageSize=20`  (you may already have it installed if you have some mods)
+- MixinBooter **USE LATEST VERSION**
 ### if you previously installed my bansoukou patch
 - Remove Bansoukou and `/minecraft/bansoukou`   (if you don't use it for another things)
 - Remove any old MillMix version (since it replaces it)
