@@ -111,6 +111,7 @@ repositories {
 
 dependencies {
     dependencies {
+        compileOnly files('libs/millenaire-8.1.2.jar')
         implementation 'org.jetbrains:annotations:24.0.1'
         implementation files("libs/millenaire-8.1.2.jar")
         // Common:
