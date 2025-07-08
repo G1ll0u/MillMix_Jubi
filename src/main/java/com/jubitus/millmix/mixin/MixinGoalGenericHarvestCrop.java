@@ -1,5 +1,6 @@
 package com.jubitus.millmix.mixin;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -57,7 +58,7 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
         for(Building buildingDest : this.getBuildings(villager)) {
             List<Point> soils;
             if (this.isDestPossible(villager, buildingDest) && (soils = buildingDest.getResManager().getSoilPoints(this.cropType)) != null && !soils.isEmpty()) {
-                boolean isSmallField = soils.size() < 64;
+                boolean isSmallField = soils.size() < 200;
                 float minStartPercent = isSmallField ? 0.99F : 0.9F;
                 float minContinuePercent = isSmallField ? 0.01F : 0.03F;
                 int existingSoilCount = 0;
@@ -66,6 +67,11 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
 
                 for (Point p : soils) {
                     if (this.soilExistsAt(villager.world, p)) {
+                        // Skip soil with no crop above (invalidate)
+                        if (!hasCropAbove(villager.world, p)) {
+                            continue;
+                        }
+
                         ++existingSoilCount;
 
                         if (this.isValidHarvestSoil(villager.world, p)) {
@@ -104,6 +110,12 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
         this.reoccurDelay = 15000;
         this.tags.add("tag_agriculture");
     }
+    private boolean hasCropAbove(World world, Point p) {
+        Block blockAbove = p.getAbove().getBlock(world);
+        // Check if blockAbove is air (no crop)
+        return blockAbove != Blocks.AIR;
+    }
+
 }
 
 

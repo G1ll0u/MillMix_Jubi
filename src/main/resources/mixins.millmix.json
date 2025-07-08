@@ -6,6 +6,7 @@
   "mixins": [
     "MixinAStar",
     "MixinBuilding",
+    "MixinBuildingPlan",
     "MixinGoal",
     "MixinGoalGeneric",
     "MixinGoalGenericHarvestCrop",
