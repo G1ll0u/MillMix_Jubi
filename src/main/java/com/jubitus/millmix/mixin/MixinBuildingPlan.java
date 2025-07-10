@@ -14,7 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Random;
 
 @Mixin(BuildingPlan.class)
-public class MixinBuildingPlan {
+public class MixinBuildingPlan  {
+
     @Inject(
             method = "testSpot(Lorg/millenaire/common/village/VillageMapInfo;Lorg/millenaire/common/pathing/atomicstryker/RegionMapper;Lorg/millenaire/common/utilities/Point;IILjava/util/Random;IZ)Lorg/millenaire/common/buildingplan/BuildingPlan$LocationReturn;",
             at = @At("RETURN"),
@@ -97,40 +98,4 @@ public class MixinBuildingPlan {
         }
     }
 
-    private boolean isMarginTerrainFlatEnough(VillageMapInfo winfo, int startX, int startZ, int width, int length, int margin, int maxDiff) {
-        int total = 0;
-        int count = 0;
-
-        for (int dx = 0; dx < width; dx++) {
-            for (int dz = 0; dz < length; dz++) {
-                int x = startX + dx;
-                int z = startZ + dz;
-                if (x < 0 || z < 0 || x >= winfo.topGround.length || z >= winfo.topGround[0].length) continue;
-                total += winfo.topGround[x][z];
-                count++;
-            }
-        }
-
-        if (count == 0) return false;
-
-        int avgHeight = total / count;
-
-        for (int dx = -margin; dx < width + margin; dx++) {
-            for (int dz = -margin; dz < length + margin; dz++) {
-                if (dx >= 0 && dx < width && dz >= 0 && dz < length) continue;
-
-                int x = startX + dx;
-                int z = startZ + dz;
-
-                if (x < 0 || z < 0 || x >= winfo.topGround.length || z >= winfo.topGround[0].length) continue;
-
-                int h = winfo.topGround[x][z];
-                if (Math.abs(h - avgHeight) > maxDiff) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
 }

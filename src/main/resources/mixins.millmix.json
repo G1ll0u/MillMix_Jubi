@@ -14,7 +14,9 @@
     "MixinGoalGenericVisit",
     "MixinGoalLumbermanChopTrees",
     "MixinMillConfigValues",
-    "MixinMillVillager"],
+    "MixinMillVillager",
+    "MixinWorldGenVillage"
+  ],
   "server": [],
   "setSourceFile": true,
   "minVersion": "0.8.5"
