@@ -5,12 +5,14 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 public class MillMixModConfig {
+
     private static Configuration config;
     private static final String CONFIG_VERSION_KEY = "configVersion";
-    private static final String CURRENT_VERSION = "1.1"; // Increment when config format changes
-
+    private static final String CURRENT_VERSION = "1.3"; // Increment when config format changes
+    public static int maxWallStepHeight;
     public static int maxTerrainHeightDiff;
-
+    public static int maxWallTerrainHeightDiff;
+    public static int maxWallCheckRadius;
     public static void init(File configFile) {
         config = new Configuration(configFile);
         boolean needsRewrite = false;
@@ -27,6 +29,7 @@ public class MillMixModConfig {
                 needsRewrite = true;
             }
 
+
             // Check for version tag
             String version = config.get(Configuration.CATEGORY_GENERAL, CONFIG_VERSION_KEY, "").getString();
             if (!CURRENT_VERSION.equals(version)) {
@@ -38,7 +41,7 @@ public class MillMixModConfig {
             maxTerrainHeightDiff = config.getInt(
                     "maxTerrainHeightDiff",
                     Configuration.CATEGORY_GENERAL,
-                    5,
+                    7,
                     0,
                     256,
                     "Maximum terrain height difference allowed under a building when generating.\n" +
@@ -46,7 +49,32 @@ public class MillMixModConfig {
                             "the location will be rejected.\nThis prevents buildings from generating on steep or uneven terrain.\n" +
                             "Needs restart to take effect."
             );
-
+            // Read updated config values
+            maxWallTerrainHeightDiff = config.getInt(
+                    "maxWallTerrainHeightDiff",
+                    Configuration.CATEGORY_GENERAL,
+                    10,
+                    0,
+                    256,
+                    "Maximum terrain height difference allowed under a building when generating.\n" +
+                            "Same as above but for walls."
+            );
+            maxWallCheckRadius = config.getInt(
+                    "maxWallCheckRadius",
+                    Configuration.CATEGORY_GENERAL,
+                    5,
+                    0,
+                    256,
+                    "Radius around wall location to check terrain flatness."
+            );
+            maxWallStepHeight = config.getInt(
+                    "maxWallStepHeight",
+                    Configuration.CATEGORY_GENERAL,
+                    2,
+                    -32,
+                    32,
+                    "test test test test."
+            );
             // Set config version if it's outdated or missing
             config.get(Configuration.CATEGORY_GENERAL, CONFIG_VERSION_KEY, CURRENT_VERSION).set(CURRENT_VERSION);
 
