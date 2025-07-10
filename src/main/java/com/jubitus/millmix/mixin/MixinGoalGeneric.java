@@ -16,10 +16,10 @@ public abstract class MixinGoalGeneric extends MixinGoal {
 
     @Shadow(remap = false)
     public abstract boolean isDestPossible(MillVillager villager, Building dest) throws MillLog.MillenaireException;
-@Shadow
+@Shadow(remap = false)
 public int duration = 100;
-@Shadow
+@Shadow(remap = false)
 public boolean lookAtGoal;
-@Shadow
+@Shadow(remap = false)
     public int reoccurDelay = 0;
 }

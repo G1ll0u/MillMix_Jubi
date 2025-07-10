@@ -13,7 +13,7 @@ import java.util.List;
 //class that helps me
 @Mixin(Goal.class) // The class I want to modify
 public abstract class MixinGoal {
-@Shadow
+@Shadow(remap = false)
 public boolean travelBookShow = true;
     @Shadow(remap = false)
     protected abstract Goal.GoalInformation packDest(Point p, Building b);

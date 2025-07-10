@@ -10,15 +10,12 @@ import org.millenaire.common.village.VillagerRecord;
 import org.millenaire.common.world.MillWorldData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 @Mixin(Building.class)
 public abstract class MixinBuilding {
@@ -28,7 +25,7 @@ public abstract class MixinBuilding {
     @Shadow(remap = false)
     public MillWorldData mw;
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract List<Building> getBuildings();
 
     @Shadow(remap = false)
@@ -68,11 +65,4 @@ public abstract class MixinBuilding {
         // Cancel original else block execution to avoid the original error logs
         ci.cancel();
     }
-
-    @Mixin(Building.class)
-    public interface BuildingAccessor {
-        @Accessor("villagers")
-        Set<MillVillager> getVillagers();
-    }
 }
-

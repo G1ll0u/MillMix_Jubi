@@ -3,7 +3,6 @@ package com.jubitus.millmix.mixin;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -19,29 +18,26 @@ import org.millenaire.common.village.Building;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(GoalGenericPlantCrop.class)
 public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
-    @Shadow
+    @Shadow(remap = false)
     public InvItem seed = null;
-    @Shadow
+    @Shadow(remap = false)
     public List<IBlockState> plantBlockState = new ArrayList<IBlockState>();
-    @Shadow
+    @Shadow(remap = false)
     public ResourceLocation soilType = null;
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract boolean isValidPlantingLocation(World world, Point p);
 
-    @Shadow
+    @Shadow(remap = false)
     public ResourceLocation cropType = null;
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract Goal.GoalInformation getDestination(MillVillager villager) throws MillLog.MillenaireException;
 
     /**
