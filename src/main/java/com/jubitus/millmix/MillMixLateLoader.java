@@ -1,6 +1,5 @@
 package com.jubitus.millmix;
 
-import org.spongepowered.asm.mixin.Mixins;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
 import java.util.Collections;

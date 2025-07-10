@@ -4,8 +4,6 @@ import com.jubitus.millmix.command.CommandGetReputation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import org.spongepowered.asm.launch.MixinBootstrap;
-import org.spongepowered.asm.mixin.Mixins;
 
 import java.io.File;
 
@@ -20,6 +18,6 @@ public class MillMix {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         File configFile = event.getSuggestedConfigurationFile();
-        ModConfig.init(configFile);
+        MillMixModConfig.init(configFile);
     }
 }
