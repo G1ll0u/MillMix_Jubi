@@ -16,7 +16,7 @@ import static org.millenaire.common.config.MillConfigValues.*;
 
 public class MixinMillConfigValues {
     /**
-     * idea: TODO
+     * idea: Allow more freedom in millenaire config
      *
      * @author Jubitus
      * @reason add config values
@@ -26,11 +26,11 @@ public class MixinMillConfigValues {
         try {
             ArrayList<MillConfigParameter> configSection = new ArrayList<>();
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("fallback_language"), "fallback_language", "en", "fr"));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("languageLearning"), "language_learning", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("TRAVEL_BOOK_LEARNING"), "travel_book_learning", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("loadAllLanguages"), "load_all_languages", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("displayStart"), "display_start", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("displayNames"), "display_names", new Object[0]));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("languageLearning"), "language_learning"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("TRAVEL_BOOK_LEARNING"), "travel_book_learning"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("loadAllLanguages"), "load_all_languages"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("displayStart"), "display_start"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("displayNames"), "display_names"));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("VillagersNamesDistance"), "villagers_names_distance", 0, 5, 10, 20, 30, 50));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("VillagersSentenceInChatDistanceSP"), "villagers_sentence_in_chat_distance_sp", 0, 1, 2, 3, 4, 6, 10));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("VillagersSentenceInChatDistanceClient"), "villagers_sentence_in_chat_distance_client", 0, 1, 2, 3, 4, 6, 10));
@@ -38,9 +38,9 @@ public class MixinMillConfigValues {
             configPageTitles.add("config.page.uisettings");
             configPageDesc.add(null);
             configSection = new ArrayList();
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateVillages"), "generate_villages", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateLoneBuildings"), "generate_lone_buildings", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateHamlets"), "generate_hamlets", new Object[0]));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateVillages"), "generate_villages"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateLoneBuildings"), "generate_lone_buildings"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateHamlets"), "generate_hamlets"));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("minDistanceBetweenVillages"), "min_village_distance", 300, 450, 600, 800, 1000));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("minDistanceBetweenVillagesAndLoneBuildings"), "min_village_lonebuilding_distance", 100, 200, 300, 500, 800));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("minDistanceBetweenLoneBuildings"), "min_lonebuilding_distance", 300, 450, 600, 800, 1000));
@@ -55,7 +55,7 @@ public class MixinMillConfigValues {
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("KeepActiveRadius"), "keep_active_radius", 0, 100, 150, 200, 250, 300, 400, 450, 500, 550, 600, 800, 900, 1000, 2000, 2500, 3000));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("VillageRadius"), "village_radius", 50, 60, 70, 80, 90, 100, 120, 140, 160, 180, 200, 250, 300, 400));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("minDistanceBetweenBuildings"), "min_distance_between_buildings", 0, 1, 2, 3, 4));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("BuildVillagePaths"), "village_paths", new Object[0]));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("BuildVillagePaths"), "village_paths"));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("maxChildrenNumber"), "max_children_number", 2, 5, 10, 15, 20));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("BackgroundRadius"), "background_radius", 0, 200, 500, 1000, 1500, 2000, 2500, 3000));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("BanditRaidRadius"), "bandit_raid_radius", 0, 200, 500, 1000, 1500, 2000));
@@ -65,18 +65,18 @@ public class MixinMillConfigValues {
             configPageTitles.add("config.page.villagebehaviour");
             configPageDesc.add("config.page.villagebehaviour.desc");
             configSection = new ArrayList();
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("sendStatistics"), "send_statistics", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("sendAdvancementLogin"), "send_advancement_login", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("autoConvertProfiles"), "auto_convert_profiles", new Object[0]));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("sendStatistics"), "send_statistics"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("sendAdvancementLogin"), "send_advancement_login"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("autoConvertProfiles"), "auto_convert_profiles"));
             configPages.add(configSection);
             configPageTitles.add("config.page.system");
             configPageDesc.add("config.page.system.desc");
             configSection = new ArrayList();
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateTranslationGap"), "generate_translation_gap", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateTravelBookExport"), "generate_travel_book_export", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateHelpData"), "generate_help_data", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateBuildingRes"), "generate_building_res", new Object[0]));
-            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("ignoreResourceCost"), "ignore_resource_cost", new Object[0]));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateTranslationGap"), "generate_translation_gap"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateTravelBookExport"), "generate_travel_book_export"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateHelpData"), "generate_help_data"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("generateBuildingRes"), "generate_building_res"));
+            configSection.add(new MillConfigParameter(MillConfigValues.class.getField("ignoreResourceCost"), "ignore_resource_cost"));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("LogTileEntityBuilding"), "LogTileEntityBuilding", 5).setDisplayDev(true));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("LogWorldGeneration"), "LogWorldGeneration", 5).setDisplayDev(true));
             configSection.add(new MillConfigParameter(MillConfigValues.class.getField("LogDiplomacy"), "LogDiplomacy", 5).setDisplayDev(true));

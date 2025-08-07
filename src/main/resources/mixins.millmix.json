@@ -14,7 +14,8 @@
     "MixinGoalGenericVisit",
     "MixinGoalLumbermanChopTrees",
     "MixinMillConfigValues",
-    "MixinMillVillager"
+    "MixinMillVillager",
+    "MixinVillageWallGenerator"
   ],
   "server": [],
   "setSourceFile": true,

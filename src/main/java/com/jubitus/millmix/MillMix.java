@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import java.io.File;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies = "required-after:millenaire")
+
 public class MillMix {
 
     @Mod.EventHandler

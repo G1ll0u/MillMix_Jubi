@@ -8,18 +8,28 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.List;
+
 //class that helps me
 @Mixin(GoalGeneric.class) // The class I want to modify
 public abstract class MixinGoalGeneric extends MixinGoal {
+    /**
+     * Shadows required by my overwrites (this was my first encounter with java, don't judge me)
+     *
+     * @author Jubitus
+     * Create overwrites for goals
+     */
     @Shadow(remap = false)
     public abstract List<Building> getBuildings(MillVillager villager);
 
     @Shadow(remap = false)
     public abstract boolean isDestPossible(MillVillager villager, Building dest) throws MillLog.MillenaireException;
-@Shadow(remap = false)
-public int duration = 100;
-@Shadow(remap = false)
-public boolean lookAtGoal;
-@Shadow(remap = false)
+
+    @Shadow(remap = false)
+    public String sound = null;
+    @Shadow(remap = false)
+    public int duration = 100;
+    @Shadow(remap = false)
+    public boolean lookAtGoal;
+    @Shadow(remap = false)
     public int reoccurDelay = 0;
 }

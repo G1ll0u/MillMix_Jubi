@@ -17,10 +17,10 @@ import org.spongepowered.asm.mixin.Overwrite;
 @Mixin(GoalLumbermanChopTrees.class)
 public class MixinGoalLumbermanChopTrees {
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: Make chop radius bigger
      *
      * @author Jubitus
-     * @reason Tweak Lumberman goal
+     * @reason Prevent lumberman missing tree blocks
      */
     @Overwrite(remap = false)
     public boolean performAction(MillVillager villager) throws Exception {
@@ -34,7 +34,7 @@ public class MixinGoalLumbermanChopTrees {
         for (int deltaY = height / 2; deltaY > -height / 2; --deltaY) {
             for (int deltaX = -radiusXZ; deltaX <= radiusXZ; ++deltaX) {
                 for (int deltaZ = -radiusXZ; deltaZ <= radiusXZ; ++deltaZ) {
-                    Point p = villager.getGoalDestPoint().getRelative((double)deltaX, (double)deltaY, (double)deltaZ);
+                    Point p = villager.getGoalDestPoint().getRelative(deltaX, deltaY, deltaZ);
                     Block block = villager.getBlock(p);
                     if (block == Blocks.LOG || block == Blocks.LOG2 || block == Blocks.LEAVES || block == Blocks.LEAVES2) {
                         if (woodFound) {

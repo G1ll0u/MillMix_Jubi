@@ -13,12 +13,10 @@ import java.util.List;
 @Mixin(AStarStatic.class)
 public class MixinAStar {
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: Prevent the "cauldron bug" caused by pathfinding
+     *
      * @author Vict
-     * @reason toggleDoor doesn't make use of BlockDoor.toggleDoor(),
-     * causing issues when other mods override the behaviour of doors.
-     * This way we don't manually set block states, but instead tell
-     * the blocks to change their states.
+     * @reason There was a bug (AI fully fixed it for me lol)
      */
     @Overwrite(remap = false)
     public static AS_PathEntity translateAStarPathtoPathEntity(World world, List<AStarNode> input, AStarConfig config) throws ThreadSafeUtilities.ChunkAccessException {

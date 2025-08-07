@@ -32,10 +32,10 @@ public abstract class MixinBuilding {
     public BuildingLocation location;
 
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: remove some log spam, it's ugly but the cause of this log spam does not break the game.
      *
      * @author Jubitus
-     * @reason Make villagers wait for crops to get ripe
+     * @reason Log spam
      */
     @Inject(
             method = "addAdult",
@@ -48,7 +48,7 @@ public abstract class MixinBuilding {
             cancellable = true,
             remap = false
     )
-    private void replaceErrorLog2(MillVillager child, CallbackInfo ci) {
+    private void replaceErrorLog(MillVillager child, CallbackInfo ci) {
         // Your condition:
         if (MillConfigValues.LogBuildingPlan >= 1) {
             MillLog.error(this, "Villager types: " + (child.gender == 1 ? MillCommonUtilities.flattenStrings(this.location.getMaleResidents()) : MillCommonUtilities.flattenStrings(this.location.getFemaleResidents())));
@@ -60,9 +60,8 @@ public abstract class MixinBuilding {
 
             MillLog.error(this, "Current residents: " + s);
         } else {
-            // Optionally, do something else or nothing
         }
-        // Cancel original else block execution to avoid the original error logs
+
         ci.cancel();
     }
 }

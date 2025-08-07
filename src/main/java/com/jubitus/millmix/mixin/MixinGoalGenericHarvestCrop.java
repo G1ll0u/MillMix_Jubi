@@ -35,6 +35,7 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
 
     @Shadow(remap = false)
     protected abstract boolean isValidHarvestSoil(World world, Point p);
+
     @Shadow(remap = false)
     public ResourceLocation cropType = null;
     @Shadow(remap = false)
@@ -43,6 +44,7 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
 
     /**
      * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     *
      * @author Jubitus
      * @reason Make villagers wait for crops to get ripe
      */
@@ -51,11 +53,11 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
         Point dest = null;
         Building destBuilding = null;
 
-        for(Building buildingDest : this.getBuildings(villager)) {
+        for (Building buildingDest : this.getBuildings(villager)) {
             List<Point> soils;
             if (this.isDestPossible(villager, buildingDest) && (soils = buildingDest.getResManager().getSoilPoints(this.cropType)) != null && !soils.isEmpty()) {
                 boolean isSmallField = soils.size() < 200;
-                float minStartPercent = isSmallField ? 0.9F : 0.9F;
+                float minStartPercent = 0.9F;
                 float minContinuePercent = isSmallField ? 0.01F : 0.03F;
                 int existingSoilCount = 0;
                 int ripeCrops = 0;
@@ -80,7 +82,7 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
                     }
                 }
 
-                float ripePercent = existingSoilCount > 0 ? (float)ripeCrops / (float)existingSoilCount : 0.0F;
+                float ripePercent = existingSoilCount > 0 ? (float) ripeCrops / (float) existingSoilCount : 0.0F;
 
                 boolean alreadyHarvesting = villager.getGoalBuildingDest() != null && villager.getGoalBuildingDest().equals(buildingDest);
                 boolean allowHarvesting = ripePercent >= minStartPercent || alreadyHarvesting && ripePercent > minContinuePercent;
@@ -94,10 +96,12 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
 
         return dest == null ? null : this.packDest(dest, destBuilding);
     }
+
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: Make villages harvest crop slower
+     *
      * @author Jubitus
-     * @reason Make villagers wait for crops to get ripe
+     * @reason Immersion
      */
     @Overwrite(remap = false)
     public void applyDefaultSettings() {
@@ -106,6 +110,7 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
         this.reoccurDelay = 15000;
         this.tags.add("tag_agriculture");
     }
+
     private boolean hasCropAbove(World world, Point p) {
         Block blockAbove = p.getAbove().getBlock(world);
         // Check if blockAbove is air (no crop)

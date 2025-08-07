@@ -1,6 +1,5 @@
 package com.jubitus.millmix.mixin;
 
-import net.minecraft.entity.Entity;
 import org.millenaire.common.annotedparameters.AnnotedParameter;
 import org.millenaire.common.annotedparameters.ConfigAnnotations;
 import org.millenaire.common.entity.MillVillager;
@@ -18,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Mixin (GoalGenericVisit.class)
+@Mixin(GoalGenericVisit.class)
 public abstract class MixinGoalGenericVisit extends MixinGoalGeneric {
     @ConfigAnnotations.ConfigField(type = AnnotedParameter.ParameterType.INTEGER, defaultValue = "2")
-    @ConfigAnnotations.FieldDocumentation(explanation = "Random offset from the point lol wait")
+    @ConfigAnnotations.FieldDocumentation(explanation = "Random offset from the destination point")
     public int randomOffset = 2;
 
     @Shadow(remap = false)
@@ -30,10 +29,10 @@ public abstract class MixinGoalGenericVisit extends MixinGoalGeneric {
     public AnnotedParameter.PosType targetPosition;
 
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: Add some offset to the destination point to make villager cluster less for visit goal, yes it was probably my first code, that's why I used @Overwrite
      *
      * @author Jubitus
-     * @reason Tweak Lumberman goal
+     * @reason egg
      */
 
     @Overwrite(remap = false)
@@ -47,7 +46,7 @@ public abstract class MixinGoalGenericVisit extends MixinGoalGeneric {
             if (targets.isEmpty()) {
                 return null;
             }
-            return this.packDest(null, null, (Entity) targets.get(MillCommonUtilities.randomInt(targets.size())));
+            return this.packDest(null, null, targets.get(MillCommonUtilities.randomInt(targets.size())));
         }
         List<Building> buildings = this.getBuildings(villager);
         for (Building dest : buildings) {

@@ -41,10 +41,10 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
     public abstract Goal.GoalInformation getDestination(MillVillager villager) throws MillLog.MillenaireException;
 
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: Make villages plant crop slower
      *
      * @author Jubitus
-     * @reason Make villagers wait for crops to get ripe
+     * @reason immersion
      */
     @Overwrite(remap = false)
     public void applyDefaultSettings() {
@@ -54,7 +54,7 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
     }
 
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: Improve planting goal to make them wait for all crops to be ripe
      *
      * @author Jubitus
      * @reason Make villagers wait for crops to get ripe
@@ -72,11 +72,12 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
 
         return invCount + fieldCount + homeCount > 0;
     }
+
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: Improve planting goal to make them wait for all crops to be ripe
      *
      * @author Jubitus
-     * @reason Make villagers wait for crops to get ripe
+     * @reason Fix planting if farm building hasn't chest, villager will now use seeds from home building inventory
      */
     @Overwrite(remap = false)
     public boolean performAction(MillVillager villager) {
@@ -115,7 +116,7 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
         }
 
         // Prepare soil block
-        Block soil = (Block)Block.REGISTRY.getObject(this.soilType);
+        Block soil = Block.REGISTRY.getObject(this.soilType);
         if (villager.getGoalDestPoint().getBelow().getBlock(villager.world) != soil) {
             villager.setBlockAndMetadata(villager.getGoalDestPoint().getBelow(), soil, 0);
         }
@@ -128,7 +129,7 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
                 villager.setBlockstate(villager.getGoalDestPoint().getAbove(), cropState.withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER));
             }
         } else {
-            Block cropBlock = (Block)Block.REGISTRY.getObject(this.cropType);
+            Block cropBlock = Block.REGISTRY.getObject(this.cropType);
             int cropMeta = GoalGenericPlantCrop.getCropBlockMeta(this.cropType);
             villager.setBlockAndMetadata(villager.getGoalDestPoint(), cropBlock, cropMeta);
             if (cropBlock instanceof BlockDoublePlant || cropBlock instanceof BlockGrapeVine) {
@@ -149,6 +150,5 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
         return true;
     }
 
-    // You will need to include other necessary methods/fields from the original class or reference them appropriately.
 }
 

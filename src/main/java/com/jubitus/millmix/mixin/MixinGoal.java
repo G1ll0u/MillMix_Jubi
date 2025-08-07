@@ -12,9 +12,17 @@ import java.util.List;
 
 //class that helps me
 @Mixin(Goal.class) // The class I want to modify
+
 public abstract class MixinGoal {
-@Shadow(remap = false)
-public boolean travelBookShow = true;
+    /**
+     * Shadows required by my overwrite (this was my first encounter with java, don't judge me)
+     *
+     * @author Jubitus
+     * @reason Create overwrites for goals
+     */
+    @Shadow(remap = false)
+    public boolean travelBookShow = true;
+
     @Shadow(remap = false)
     protected abstract Goal.GoalInformation packDest(Point p, Building b);
 
@@ -23,6 +31,8 @@ public boolean travelBookShow = true;
 
     @Shadow(remap = false)
     protected abstract Goal.GoalInformation packDest(Point p);
+
     @Shadow(remap = false)
     public List<String> tags = new ArrayList<String>();
 }
+

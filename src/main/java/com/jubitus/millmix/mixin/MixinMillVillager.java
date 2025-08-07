@@ -78,5 +78,6 @@ public abstract class MixinMillVillager extends EntityCreature {
         }
 
     }
+
 }
 

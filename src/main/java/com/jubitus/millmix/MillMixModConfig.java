@@ -5,12 +5,13 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 public class MillMixModConfig {
-
-
+    public static boolean disableAllWalls = false;
+    public static int maxWallTerrainHeightDiff;
     private static Configuration config;
     private static final String CONFIG_VERSION_KEY = "configVersion";
-    private static final String CURRENT_VERSION = "1.6"; // Increment when config format changes
+    private static final String CURRENT_VERSION = "1.9";
     public static int maxTerrainHeightDiff;
+
     public static void init(File configFile) {
         config = new Configuration(configFile);
         boolean needsRewrite = false;
@@ -29,7 +30,7 @@ public class MillMixModConfig {
 
 
             // Check for version tag
-            String version = config.get("don't touch that", CONFIG_VERSION_KEY,  "").getString();
+            String version = config.get("don't touch that", CONFIG_VERSION_KEY, "").getString();
             if (!CURRENT_VERSION.equals(version)) {
                 System.out.println("[ModConfig] Config version mismatch or missing. Updating config version to " + CURRENT_VERSION);
                 needsRewrite = true;
@@ -43,6 +44,26 @@ public class MillMixModConfig {
                     0,
                     256,
                     "Maximum terrain height difference allowed under a building when generating.\n" +
+                            "If the difference between the highest and lowest ground block under the building area is greater than this value, " +
+                            "the location will be rejected.\nThis prevents buildings from generating on steep or uneven terrain.\n" +
+                            "Needs restart to take effect."
+            );
+            maxWallTerrainHeightDiff = config.getInt(
+                    "maxWallTerrainHeightDiff",
+                    Configuration.CATEGORY_GENERAL,
+                    8,
+                    0,
+                    256,
+                    "Maximum terrain height difference allowed under a wall when generated.\n" +
+                            "If the difference between the highest and lowest ground block under the building area is greater than this value, " +
+                            "the location will be rejected.\nThis prevents buildings from generating on steep or uneven terrain.\n" +
+                            "Needs restart to take effect."
+            );
+            disableAllWalls = config.getBoolean(
+                    "disableAllWalls",
+                    Configuration.CATEGORY_GENERAL,
+                    false,
+                    "Maximum terrain height difference allowed under a wall when generated.\n" +
                             "If the difference between the highest and lowest ground block under the building area is greater than this value, " +
                             "the location will be rejected.\nThis prevents buildings from generating on steep or uneven terrain.\n" +
                             "Needs restart to take effect."
