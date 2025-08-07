@@ -30,7 +30,7 @@ It's also useful for culture creators because it fixes millagers not planting if
 | **Log spam fix**              | Mute error `Could not find a villager type to create. Gender: 2`                         | Implemented | It fixes a shitty error that flood millenaire.log with errors, preventing millenaire.log polluting hard drive space and health                                                 |
 
 ## Prerequisites
-- MixinBooter **USE LATEST VERSION**
+- MixinBooter **Update it if my mod don't work**
 ### if you previously installed my bansoukou patch
 - Remove Bansoukou and `/minecraft/bansoukou`   (if you don't use it for another things)
 - Remove any old MillMix version (since it replaces it)
