@@ -8,9 +8,6 @@ It fixes some log spam, tries to prevent building spawning and breaking landscap
 It also adds some values to "M" menu, you can now set villager names distance to 0 and totally hide names.
 It's also useful for culture creators because it fixes millagers not planting if the farm building has no chests (only custom addons have farms without chests) 
 
-### What's a goal ?
-A goal is simply the target of a villager. For example, the farmer goals will be harvestWheat, plantWheat, getBackResourceHome among others.
-
 ### Current features :
 | Target                        | Feature                                                                                  | Status      | Note                                                                                                                                                                           |
 |-------------------------------|------------------------------------------------------------------------------------------|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -42,6 +39,9 @@ My mod should not break your save but please **make backups**
 
 There still aren't other goal tweaks I talked about some times ago on Millénaire Discord such as guards actually patrolling or farmer children. At the moment, my mod just patches bits of game code, not culture related files like goals.txt. I will do, but I want to do it cleanly.
 Also, note that I didn't carefully test all tweaks. If you have problems, report it here on issues tab or in the millenaire discord #jubitus.
+
+### What's a goal ?
+A goal is simply the target of a villager. For example, the farmer goals will be harvestWheat, plantWheat, getBackResourceHome among others.
 
 ### Millenaire website
 https://millenaire.org/
