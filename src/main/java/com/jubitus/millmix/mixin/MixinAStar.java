@@ -15,7 +15,7 @@ public class MixinAStar {
     /**
      * idea: Prevent the "cauldron bug" caused by pathfinding
      *
-     * @author Vict
+     * @author Jubitus
      * @reason There was a bug (AI fully fixed it for me lol)
      */
     @Overwrite(remap = false)

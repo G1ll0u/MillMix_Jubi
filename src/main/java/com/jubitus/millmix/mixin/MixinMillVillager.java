@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+// Here is the main class of the old MillMix
 @Mixin(MillVillager.class)
 public abstract class MixinMillVillager extends EntityCreature {
     public MixinMillVillager(World world) {

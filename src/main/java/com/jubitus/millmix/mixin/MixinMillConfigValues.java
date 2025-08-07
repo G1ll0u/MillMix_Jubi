@@ -19,7 +19,7 @@ public class MixinMillConfigValues {
      * idea: Allow more freedom in millenaire config
      *
      * @author Jubitus
-     * @reason add config values
+     * @reason add config values in "M" menu
      */
     @Overwrite(remap = false)
     private static void initConfigItems() {

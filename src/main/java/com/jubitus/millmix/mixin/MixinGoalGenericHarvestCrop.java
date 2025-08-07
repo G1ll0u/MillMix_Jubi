@@ -43,10 +43,10 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
 
 
     /**
-     * idea: change millvillager's toggleDoor to use BlockDoor's toggleDoor
+     * idea: Make villagers wait for ripe crops
      *
      * @author Jubitus
-     * @reason Make villagers wait for crops to get ripe
+     * @reason Villagers always rush on the first ripe crop instead of waiting for all crops to be ripe.
      */
     @Overwrite(remap = false)
     public Goal.GoalInformation getDestination(MillVillager villager) throws MillLog.MillenaireException {
@@ -98,7 +98,7 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
     }
 
     /**
-     * idea: Make villages harvest crop slower
+     * idea: Make villagers harvest crop slower
      *
      * @author Jubitus
      * @reason Immersion

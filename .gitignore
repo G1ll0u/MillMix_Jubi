@@ -18,7 +18,6 @@ build
 .gradle
 
 # other
-millenaire-*.jar
 eclipse
 run
 libs
