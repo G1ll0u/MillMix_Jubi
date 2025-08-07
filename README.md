@@ -1,6 +1,6 @@
 
 # Fork of [Victimarius/millmix](https://github.com/Victimarius/millmix) that fixes and tweaks even more things in Millénaire 1.12.2 mod making it more immersive.
-This is my first mod ! :D
+<img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/f1bcb123-a49f-49a4-9a0a-e4eea45a8da1" />
 
 ## Description
 It's a mod that patches [Millenaire 8.x.x on 1.12.2](https://www.curseforge.com/minecraft/mc-mods/millenaire) with mixins, making it more immersive. I forked it from victimarius/millmix.
