@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -32,16 +33,13 @@ public class MixinMillLog {
                 logDir.mkdirs();
             }
 
-            // Clean up old log files (keep X most recent)
+            // Clean up old log files (keep 5 most recent)
             File[] logFiles = logDir.listFiles((dir, name) -> name.endsWith(".log"));
-            int maxLogs = MillMixModConfig.logsToKeep;
-
-            if (logFiles != null && logFiles.length > maxLogs) {
+            if (logFiles != null && logFiles.length > 5) {
                 // Sort descending by last modified time (newest first)
                 Arrays.sort(logFiles, Comparator.comparingLong(File::lastModified).reversed());
-
-                // Delete files beyond the most recent `maxLogs`
-                for (int i = maxLogs; i < logFiles.length; i++) {
+                // Delete files beyond the 5th most recent
+                for (int i = 5; i < logFiles.length; i++) {
                     logFiles[i].delete();
                 }
             }
@@ -61,4 +59,3 @@ public class MixinMillLog {
         }
     }
 }
-

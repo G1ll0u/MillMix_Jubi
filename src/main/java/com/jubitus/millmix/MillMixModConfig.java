@@ -9,9 +9,8 @@ public class MillMixModConfig {
     public static int maxWallTerrainHeightDiff;
     private static Configuration config;
     private static final String CONFIG_VERSION_KEY = "configVersion";
-    private static final String CURRENT_VERSION = "2.1";
+    private static final String CURRENT_VERSION = "2.2";
     public static int maxTerrainHeightDiff;
-    public static int logsToKeep;
 
     public static void init(File configFile) {
         config = new Configuration(configFile);
@@ -68,14 +67,6 @@ public class MillMixModConfig {
                             "If the difference between the highest and lowest ground block under the building area is greater than this value, " +
                             "the location will be rejected.\nThis prevents buildings from generating on steep or uneven terrain.\n" +
                             "Needs restart to take effect."
-            );
-            logsToKeep = config.getInt(
-                    "logsToKeep",
-                    Configuration.CATEGORY_GENERAL,
-                    5,
-                    1,
-                    30,
-                    "Maximum logs to keep"
             );
 
             // Set config version if it's outdated or missing
