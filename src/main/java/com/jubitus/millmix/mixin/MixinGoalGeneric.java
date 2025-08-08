@@ -16,7 +16,6 @@ public abstract class MixinGoalGeneric extends MixinGoal {
      * Shadows required by my overwrites (this was my first encounter with java, don't judge me)
      *
      * @author Jubitus
-     *
      */
     @Shadow(remap = false)
     public abstract List<Building> getBuildings(MillVillager villager);

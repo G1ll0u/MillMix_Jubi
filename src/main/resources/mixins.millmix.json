@@ -14,6 +14,7 @@
     "MixinGoalGenericVisit",
     "MixinGoalLumbermanChopTrees",
     "MixinMillConfigValues",
+    "MixinMillLog",
     "MixinMillVillager",
     "MixinVillageWallGenerator"
   ],
