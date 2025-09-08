@@ -16,6 +16,7 @@
     "MixinMillConfigValues",
     "MixinMillLog",
     "MixinMillVillager",
+    "MixinMillWorldData",
     "MixinVillageWallGenerator"
   ],
   "server": [],

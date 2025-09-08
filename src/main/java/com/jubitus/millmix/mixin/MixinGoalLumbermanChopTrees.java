@@ -1,5 +1,6 @@
 package com.jubitus.millmix.mixin;
 
+import com.jubitus.millmix.MillMixModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumHand;
@@ -29,7 +30,7 @@ public class MixinGoalLumbermanChopTrees {
             MillLog.debug(this, "Attempting to gather wood around: " + villager.getGoalDestPoint() + ", central block: " + villager.getGoalDestPoint().getBlock(villager.world));
         }
 
-        int radiusXZ = 10;
+        int radiusXZ = MillMixModConfig.chopRadius;
         int height = 24;
         for (int deltaY = height / 2; deltaY > -height / 2; --deltaY) {
             for (int deltaX = -radiusXZ; deltaX <= radiusXZ; ++deltaX) {

@@ -1,6 +1,5 @@
 package com.jubitus.millmix.mixin;
 
-import com.jubitus.millmix.MillMixModConfig;
 import org.millenaire.common.utilities.MillCommonUtilities;
 import org.millenaire.common.utilities.MillLog;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,7 +7,6 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -21,7 +19,7 @@ public class MixinMillLog {
      * @author Jubitus
      * @reason kill 100MB millenaire.log
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public static void initLogFileWriter() {
         try {
             // Base directory: millenaire-custom inside mods folder

@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 // Here is the main class of the old MillMix
 @Mixin(MillVillager.class)
 public abstract class MixinMillVillager extends EntityCreature {
+
     public MixinMillVillager(World world) {
         super(world); //hush compiler's cry for (unused) superclass constructor
     }
@@ -81,4 +82,3 @@ public abstract class MixinMillVillager extends EntityCreature {
     }
 
 }
-

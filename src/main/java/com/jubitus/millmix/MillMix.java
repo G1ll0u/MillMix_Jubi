@@ -18,6 +18,7 @@ public class MillMix {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        // Load config
         File configFile = event.getSuggestedConfigurationFile();
         MillMixModConfig.init(configFile);
     }
