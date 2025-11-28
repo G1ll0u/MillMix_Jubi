@@ -17,7 +17,8 @@
     "MixinMillLog",
     "MixinMillVillager",
     "MixinMillWorldData",
-    "MixinVillageWallGenerator"
+    "MixinVillageWallGenerator",
+    "millenaireextended.MixinExtendedDeployer"
   ],
   "server": [],
   "setSourceFile": true,
