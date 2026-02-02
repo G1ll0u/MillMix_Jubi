@@ -1,5 +1,7 @@
 package com.jubitus.millmix.mixin;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.world.World;
 import org.millenaire.common.pathing.atomicstryker.*;
@@ -10,7 +12,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(AStarStatic.class)
+@Mixin(value = AStarStatic.class, remap = false)
 public class MixinAStar {
     /**
      * idea: Prevent the "cauldron bug" caused by pathfinding
@@ -53,7 +55,22 @@ public class MixinAStar {
         while (size > 0) {
             AStarNode reading = input.get(size - 1);
 
-            AS_PathPoint asp = new AS_PathPoint(reading.x, reading.y, reading.z);
+            int px = reading.x;
+            int py = reading.y;
+            int pz = reading.z;
+
+// If we allow swimming, don't make path points in AIR above water
+            if (config != null && config.canSwim) {
+                Block here = ThreadSafeUtilities.getBlock(world, px, py, pz);
+                Block below = ThreadSafeUtilities.getBlock(world, px, py - 1, pz);
+
+                if (here == Blocks.AIR && (below == Blocks.WATER || below == Blocks.FLOWING_WATER)) {
+                    py -= 1; // move the point into the water block
+                }
+            }
+
+            AS_PathPoint asp = new AS_PathPoint(px, py, pz);
+
             asp.setIndex(i);
             asp.setTotalPathDistance(i);
             asp.setDistanceToNext(1.0f);

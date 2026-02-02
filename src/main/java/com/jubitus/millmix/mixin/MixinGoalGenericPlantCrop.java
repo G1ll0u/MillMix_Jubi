@@ -30,15 +30,8 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
     public List<IBlockState> plantBlockState = new ArrayList<IBlockState>();
     @Shadow(remap = false)
     public ResourceLocation soilType = null;
-
-    @Shadow(remap = false)
-    public abstract boolean isValidPlantingLocation(World world, Point p);
-
     @Shadow(remap = false)
     public ResourceLocation cropType = null;
-
-    @Shadow(remap = false)
-    public abstract Goal.GoalInformation getDestination(MillVillager villager) throws MillLog.MillenaireException;
 
     /**
      * idea: Make villages plant crop slower
@@ -51,26 +44,6 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
         this.duration = 20;
         this.lookAtGoal = true;
         this.tags.add("tag_agriculture");
-    }
-
-    /**
-     * idea: Improve planting goal to make them wait for all crops to be ripe
-     *
-     * @author Jubitus
-     * @reason Make villagers wait for crops to get ripe
-     */
-    @Overwrite(remap = false)
-    public boolean isDestPossibleSpecific(MillVillager villager, Building b) {
-        if (this.seed == null) return true;
-
-        int invCount = villager.countInv(this.seed);
-        int fieldCount = b.countGoods(this.seed);
-
-        // New: also check home building
-        Building home = villager.getHouse();
-        int homeCount = (home != null && home != b) ? home.countGoods(this.seed) : 0;
-
-        return invCount + fieldCount + homeCount > 0;
     }
 
     /**
@@ -149,6 +122,32 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
         }
         return true;
     }
+
+    @Shadow(remap = false)
+    public abstract boolean isValidPlantingLocation(World world, Point p);
+
+    /**
+     * idea: Improve planting goal to make them wait for all crops to be ripe
+     *
+     * @author Jubitus
+     * @reason Make villagers wait for crops to get ripe
+     */
+    @Overwrite(remap = false)
+    public boolean isDestPossibleSpecific(MillVillager villager, Building b) {
+        if (this.seed == null) return true;
+
+        int invCount = villager.countInv(this.seed);
+        int fieldCount = b.countGoods(this.seed);
+
+        // New: also check home building
+        Building home = villager.getHouse();
+        int homeCount = (home != null && home != b) ? home.countGoods(this.seed) : 0;
+
+        return invCount + fieldCount + homeCount > 0;
+    }
+
+    @Shadow(remap = false)
+    public abstract Goal.GoalInformation getDestination(MillVillager villager) throws MillLog.MillenaireException;
 
 }
 

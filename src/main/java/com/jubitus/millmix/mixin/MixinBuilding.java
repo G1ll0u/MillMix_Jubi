@@ -20,16 +20,12 @@ import java.util.Map;
 @Mixin(Building.class)
 public abstract class MixinBuilding {
     @Shadow(remap = false)
-    public abstract Map<Long, VillagerRecord> getVillagerRecords();
-
-    @Shadow(remap = false)
     public MillWorldData mw;
+    @Shadow(remap = false)
+    public BuildingLocation location;
 
     @Shadow(remap = false)
     public abstract List<Building> getBuildings();
-
-    @Shadow(remap = false)
-    public BuildingLocation location;
 
     /**
      * idea: remove some log spam, it's ugly but the cause of this log spam does not break the game.
@@ -64,4 +60,7 @@ public abstract class MixinBuilding {
 
         ci.cancel();
     }
+
+    @Shadow(remap = false)
+    public abstract Map<Long, VillagerRecord> getVillagerRecords();
 }

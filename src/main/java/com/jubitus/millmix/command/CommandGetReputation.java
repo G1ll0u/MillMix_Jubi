@@ -22,6 +22,14 @@ public class CommandGetReputation implements ICommand {
         return sender.canUseCommand(this.getRequiredPermissionLevel(), this.getName());
     }
 
+    public int getRequiredPermissionLevel() {
+        return 3;
+    }
+
+    public String getName() {
+        return "millGetRep";
+    }
+
     public int compareTo(ICommand o) {
         return this.getName().compareTo(o.getName());
     }
@@ -76,16 +84,12 @@ public class CommandGetReputation implements ICommand {
         }
     }
 
+    public String getUsage(ICommandSender sender) {
+        return "commands." + this.getName().toLowerCase() + ".usage";
+    }
+
     public List<String> getAliases() {
         return Collections.emptyList();
-    }
-
-    public String getName() {
-        return "millGetRep";
-    }
-
-    public int getRequiredPermissionLevel() {
-        return 3;
     }
 
     public List<String> getTabCompletions(MinecraftServer server,
@@ -108,10 +112,6 @@ public class CommandGetReputation implements ICommand {
             return possibleMatches;
         }
         return Collections.emptyList();
-    }
-
-    public String getUsage(ICommandSender sender) {
-        return "commands." + this.getName().toLowerCase() + ".usage";
     }
 
     public boolean isUsernameIndex(String[] args, int index) {

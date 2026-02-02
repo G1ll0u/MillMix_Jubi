@@ -2,9 +2,12 @@
   "required": true,
   "package": "com.jubitus.millmix.mixin",
   "compatibilityLevel": "JAVA_8",
+  "refmap": "mixins.millmix.refmap.json",
   "target": "@env(DEFAULT)",
   "mixins": [
     "MixinAStar",
+    "MixinAStarPathPlannerJPS",
+    "MixinAStarStatic",
     "MixinBuilding",
     "MixinBuildingPlan",
     "MixinGoal",
@@ -18,9 +21,9 @@
     "MixinMillVillager",
     "MixinMillWorldData",
     "MixinVillageWallGenerator",
-    "millenaireextended.MixinExtendedDeployer"
+    "MixinWorldGenVillage_AWBlock"
   ],
   "server": [],
   "setSourceFile": true,
-  "minVersion": "0.8.5"
+  "minVersion": "0.8"
 }

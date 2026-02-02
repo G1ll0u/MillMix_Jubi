@@ -22,6 +22,8 @@ public abstract class MixinGoal {
      */
     @Shadow(remap = false)
     public boolean travelBookShow = true;
+    @Shadow(remap = false)
+    public List<String> tags = new ArrayList<String>();
 
     @Shadow(remap = false)
     protected abstract Goal.GoalInformation packDest(Point p, Building b);
@@ -31,8 +33,5 @@ public abstract class MixinGoal {
 
     @Shadow(remap = false)
     protected abstract Goal.GoalInformation packDest(Point p);
-
-    @Shadow(remap = false)
-    public List<String> tags = new ArrayList<String>();
 }
 

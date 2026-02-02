@@ -22,25 +22,13 @@ import java.util.List;
 
 @Mixin(GoalGenericHarvestCrop.class) // The class I want to modify
 public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
-    private boolean soilExistsAt(World world, Point p) {
-        BlockPos pos = new BlockPos(p.x, p.y, p.z);
-        IBlockState state = world.getBlockState(pos);
-
-        // Adjust this logic to match your crop soil block type
-        return state.getBlock() == Blocks.FARMLAND;
-    }
+    @Shadow(remap = false)
+    public ResourceLocation cropType = null;
 
 
     //shadow private class
-
-    @Shadow(remap = false)
-    protected abstract boolean isValidHarvestSoil(World world, Point p);
-
-    @Shadow(remap = false)
-    public ResourceLocation cropType = null;
     @Shadow(remap = false)
     public List<AnnotedParameter.BonusItem> harvestItem = new ArrayList();
-
 
     /**
      * idea: Make villagers wait for ripe crops
@@ -97,6 +85,23 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
         return dest == null ? null : this.packDest(dest, destBuilding);
     }
 
+    private boolean soilExistsAt(World world, Point p) {
+        BlockPos pos = new BlockPos(p.x, p.y, p.z);
+        IBlockState state = world.getBlockState(pos);
+
+        // Adjust this logic to match your crop soil block type
+        return state.getBlock() == Blocks.FARMLAND;
+    }
+
+    private boolean hasCropAbove(World world, Point p) {
+        Block blockAbove = p.getAbove().getBlock(world);
+        // Check if blockAbove is air (no crop)
+        return blockAbove != Blocks.AIR;
+    }
+
+    @Shadow(remap = false)
+    protected abstract boolean isValidHarvestSoil(World world, Point p);
+
     /**
      * idea: Make villagers harvest crop slower
      *
@@ -109,12 +114,6 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
         this.lookAtGoal = true;
         this.reoccurDelay = 15000;
         this.tags.add("tag_agriculture");
-    }
-
-    private boolean hasCropAbove(World world, Point p) {
-        Block blockAbove = p.getAbove().getBlock(world);
-        // Check if blockAbove is air (no crop)
-        return blockAbove != Blocks.AIR;
     }
 
 }
