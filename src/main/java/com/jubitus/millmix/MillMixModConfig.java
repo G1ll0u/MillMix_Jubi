@@ -15,7 +15,7 @@ public class MillMixModConfig {
     public static boolean debugAWOverlapLogs = true;
     public static int maxTerrainHeightDiff;
     public static boolean enableVillagerSwimming = false;
-    public static boolean avoidAW2Structures = false;
+    public static boolean avoidAW2Structures = true;
     public static int structureAvoidBuffer = 8; // blocks of “spacing” around structures
     private static Configuration config;
 
@@ -137,14 +137,14 @@ public class MillMixModConfig {
                         "Needs restart to take effect."
         );
         avoidAW2Structures = cfg.getBoolean(
-                "avoidOtherModStructures",
+                "avoidAW2Structures",
                 "Compat",
                 true,
                 "If true, Millénaire buildings/walls will not generate inside/overlapping the AW2's structure/town bounding boxes."
         );
 
         structureAvoidBuffer = cfg.getInt(
-                "structureAvoidBuffer",
+                "avoidAW2Structures",
                 "Compat",
                 8, 0, 256,
                 "Extra padding (blocks) added around AW2 structures when checking overlap."

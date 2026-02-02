@@ -1,9 +1,6 @@
 package com.jubitus.millmix.mixin;
 
 import com.jubitus.millmix.MillMixModConfig;
-import com.jubitus.millmix.aw.AWOverlap;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLLog;
 import org.millenaire.common.buildingplan.BuildingPlan;
 import org.millenaire.common.pathing.atomicstryker.RegionMapper;
 import org.millenaire.common.utilities.Point;
@@ -55,29 +52,6 @@ public class MixinBuildingPlan {
             xwidth = plan.width  + plan.areaToClearWidthBefore  + plan.areaToClearWidthAfter  + 2;
             zwidth = plan.length + plan.areaToClearLengthBefore + plan.areaToClearLengthAfter + 2;
         }
-
-        // ============================================================
-        // ✅ PUT AW CHECK EXACTLY HERE (before terrain loops = faster)
-        // ============================================================
-        int worldX = x + winfo.mapStartX;
-        int worldZ = z + winfo.mapStartZ;
-
-        int worldMinX = worldX - (xwidth / 2);
-        int worldMaxX = worldX + (xwidth / 2);
-        int worldMinZ = worldZ - (zwidth / 2);
-        int worldMaxZ = worldZ + (zwidth / 2);
-
-        if (AWOverlap.intersectsAny(winfo.world, worldMinX, 0, worldMinZ, worldMaxX, 255, worldMaxZ)) {
-            if (MillMixModConfig.debugAWOverlapLogs) {
-                System.out.println("[MillMix] BLOCK building spot (AW overlap) planKey=" + loc.planKey
-                        + " centreXZ=(" + worldX + "," + worldZ + ")"
-                        + " X=[" + worldMinX + "," + worldMaxX + "]"
-                        + " Z=[" + worldMinZ + "," + worldMaxZ + "]");
-            }
-            cir.setReturnValue(new BuildingPlan.LocationReturn(10, loc.pos));
-            return;
-        }
-        // ============================================================
 
         // --- Slope check (only ONE scan; you had 2 scans before) ---
         int minHeight = Integer.MAX_VALUE;

@@ -53,8 +53,7 @@ public final class AWOverlap {
                                         int maxX, int maxY, int maxZ) {
 
         if (world == null || world.isRemote) return false;
-
-        // If you ALWAYS run with AW installed, you can remove this check.
+        if (!MillMixModConfig.avoidAW2Structures) return false;
         if (!isAWLoaded()) return false;
 
         // normalize
