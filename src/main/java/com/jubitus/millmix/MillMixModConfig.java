@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class MillMixModConfig {
     private static final String CONFIG_VERSION_KEY = "configVersion";
-    private static final String CURRENT_VERSION = "3.0";
+    private static final String CURRENT_VERSION = "3.1";
     public static boolean disableAllWalls = false;
     public static int maxWallTerrainHeightDiff;
     public static boolean enableDangerousCustomVillageLogic = false;
@@ -16,8 +16,10 @@ public class MillMixModConfig {
     public static int maxTerrainHeightDiff;
     public static boolean enableVillagerSwimming = false;
     public static boolean avoidAW2Structures = true;
-    public static int structureAvoidBuffer = 8; // blocks of “spacing” around structures
     private static Configuration config;
+
+
+
 
     public static void init(File configFile) {
         // Ensure parent folder exists
@@ -143,13 +145,6 @@ public class MillMixModConfig {
                 "If true, Millénaire buildings/walls will not generate inside/overlapping the AW2's structure/town bounding boxes."
         );
 
-        structureAvoidBuffer = cfg.getInt(
-                "avoidAW2Structures",
-                "Compat",
-                8, 0, 256,
-                "Extra padding (blocks) added around AW2 structures when checking overlap."
-        );
-
         cfg.save();
     }
 
@@ -248,24 +243,17 @@ public class MillMixModConfig {
         enableVillagerSwimming = cfg.getBoolean(
                 "enableVillagerSwimming",
                 "Pathing",
-                true,
+                false,
                 "If true, villagers may path through water (swimming) and get a small buoyancy assist.\n" +
                         "If false, all water passable/viable logic and the swim fallback are disabled.\n" +
                         "Needs restart to take effect."
         );
         avoidAW2Structures = cfg.getBoolean(
-                "avoidOtherModStructures",
+                "avoidAW2Structures",
                 "Compat",
                 true,
                 "If true, Millénaire buildings/walls will not generate inside/overlapping the other mod's structure/town bounding boxes.\n" +
                         "Uses reflection; safe even if the other mod is not installed."
-        );
-
-        structureAvoidBuffer = cfg.getInt(
-                "structureAvoidBuffer",
-                "Compat",
-                8, 0, 256,
-                "Extra padding (blocks) added around other mod structures when checking overlap."
         );
 
 

@@ -232,22 +232,23 @@ jar {
         def attribute_map = [:]
         if (propertyBool('is_coremod')) {
             attribute_map['FMLCorePlugin'] = propertyString('coremod_plugin_class_name')
-            if (propertyBool('coremod_includes_mod')) {
-                attribute_map['FMLCorePluginContainsFMLMod'] = true
-                def currentTasks = gradle.startParameter.taskNames
-                if (currentTasks[0] == 'build' || currentTasks[0] == 'prepareObfModsFolder' || currentTasks[0] == 'runObfClient') {
-                    attribute_map['ForceLoadAsMod'] = true
-                }
-            }
+
+            // IMPORTANT: ensure Forge treats this jar as ALSO containing a normal mod
+            attribute_map['FMLCorePluginContainsFMLMod'] = 'true'
+
+            // This helps in some environments when running obfuscated/packaged
+            attribute_map['ForceLoadAsMod'] = 'true'
         }
+
         if (propertyBool('use_access_transformer')) {
             attribute_map['FMLAT'] = propertyString('access_transformer_locations')
         }
         attributes(attribute_map)
     }
-    // Add all embedded dependencies into the jar
-    from(provider{ configurations.embed.collect {it.isDirectory() ? it : zipTree(it)} })
+
+    from(provider { configurations.embed.collect { it.isDirectory() ? it : zipTree(it) } })
 }
+
 
 idea {
     module {

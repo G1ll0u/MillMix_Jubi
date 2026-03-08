@@ -75,7 +75,7 @@ public class MixinGoalLumbermanChopTrees {
                                 villager.addToInv(Blocks.SAPLING, meta & 3, 1);
                             }
                         } else { // LEAVES2
-                            if ((meta & 3) == 0) {
+                            if ( (meta & 3) == 0 ) {
                                 if (MillCommonUtilities.randomInt(4) == 0) {
                                     villager.addToInv(Blocks.SAPLING, 4, 1); // acacia
                                 }
