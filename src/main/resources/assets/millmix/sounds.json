@@ -2,19 +2,31 @@
   "church_bell": {
     "category": "block",
     "sounds": [
-      { "name": "millmix:church_bell", "stream": true, "attenuation_distance": 4096 }
+      {
+        "name": "millmix:church_bell",
+        "stream": true,
+        "attenuation_distance": 4096
+      }
     ]
   },
   "church_bell_mid": {
     "category": "block",
     "sounds": [
-      { "name": "millmix:church_bell_mid", "stream": true, "attenuation_distance": 4096 }
+      {
+        "name": "millmix:church_bell_mid",
+        "stream": true,
+        "attenuation_distance": 4096
+      }
     ]
   },
   "church_bell_far": {
     "category": "block",
     "sounds": [
-      { "name": "millmix:church_bell_far", "stream": true, "attenuation_distance": 4096 }
+      {
+        "name": "millmix:church_bell_far",
+        "stream": true,
+        "attenuation_distance": 4096
+      }
     ]
   }
 }
