@@ -24,7 +24,6 @@
     "MixinMillLog",
     "MixinMillVillager",
     "MixinMillVillager_SwimBuoyancy",
-    "MixinMillWorldData",
     "MixinVillagerRecord_SanitizeWrite",
     "MixinVillageWallGenerator",
     "MixinWalkNodeProcessor_CacheNodeTypeRaw_Overwrite",

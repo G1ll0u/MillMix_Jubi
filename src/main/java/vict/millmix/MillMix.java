@@ -3,12 +3,14 @@ package vict.millmix;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import vict.millmix.command.CommandDebugResetLoneBuildingsVillagers;
 import vict.millmix.command.CommandGetReputation;
 import vict.millmix.command.CommandMillDebugExportWorld;
+import vict.millmix.millmix.Tags;
 
 import java.io.File;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies = "required-after:millenaire")
+@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION, dependencies = "required-after:millenaire")
 public class MillMix {
 
 
@@ -16,6 +18,7 @@ public class MillMix {
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandGetReputation());
         event.registerServerCommand(new CommandMillDebugExportWorld());
+        event.registerServerCommand(new CommandDebugResetLoneBuildingsVillagers());
     }
 
     @Mod.EventHandler

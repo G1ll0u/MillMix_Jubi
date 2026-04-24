@@ -10,7 +10,6 @@ public class MillMixModConfig {
     private static final String CURRENT_VERSION = "3.1";
     public static boolean disableAllWalls = false;
     public static int maxWallTerrainHeightDiff;
-    public static boolean enableDangerousCustomVillageLogic = false;
     public static int chopRadius;
     public static boolean debugAWOverlapLogs = true;
     public static int maxTerrainHeightDiff;
@@ -114,14 +113,6 @@ public class MillMixModConfig {
                 "If true, prevents all village walls from generating. Needs restart to take effect."
         );
 
-        // --- DEBUG ---
-        enableDangerousCustomVillageLogic = cfg.getBoolean(
-                "DangerousCustomVillageLogicForDebuggingLoneBuildings",
-                "debug",
-                false,
-                "ENABLE THIS ONLY TO USE /MillDebugResetVillagers ON LONEBUILDINGS AND DISABLE IT WHEN DONE (RESTART REQUIRED)\n" +
-                        "IT DOES MODIFY getClosestVillage METHOD TO INCLUDE LONEBUILDINGS, THAT'S DIRTY AND CAN CAUSE PROBLEMS IF USED A LONG TIME\n"
-        );
         chopRadius = cfg.getInt(
                 "chopWoodRadius",
                 "Lumberman",
@@ -225,13 +216,6 @@ public class MillMixModConfig {
                 "If true, prevents all village walls from generating. Needs restart to take effect."
         );
 
-        // --- DEBUG ---
-        enableDangerousCustomVillageLogic = cfg.getBoolean(
-                "DangerousCustomVillageLogicForDebuggingLoneBuildings", "debug",
-                false,
-                "ENABLE THIS ONLY TO USE /MillDebugResetVillagers ON LONEBUILDINGS AND DISABLE IT WHEN DONE (RESTART REQUIRED)\n" +
-                        "IT DOES MODIFY getClosestVillage METHOD TO INCLUDE LONEBUILDINGS, THAT'S DIRTY AND CAN CAUSE PROBLEMS IF USED A LONG TIME\n"
-        );
         chopRadius = cfg.getInt(
                 "chopWoodRadius",
                 "Lumberman",
