@@ -37,7 +37,7 @@ public abstract class MixinGoalGeneric extends MixinGoal {
     @Unique private final WeakHashMap<MillVillager, Boolean> millmix$genCacheValue = new WeakHashMap<>();
 
     @Overwrite(remap = false)
-    public boolean isPossibleSpecific(final MillVillager villager) throws Exception {
+    public final boolean isPossibleSpecific(final MillVillager villager) throws Exception {
         final long now = villager.world.getTotalWorldTime();
         final Long lastTick = this.millmix$genCacheTick.get(villager);
         if (lastTick != null && lastTick.longValue() == now) {
