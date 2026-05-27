@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import vict.millmix.command.CommandDebugResetLoneBuildingsVillagers;
 import vict.millmix.command.CommandGetReputation;
+import vict.millmix.command.CommandMillConfigReload;
 import vict.millmix.command.CommandMillDebugExportWorld;
 import vict.millmix.millmix.Tags;
 
@@ -19,6 +20,7 @@ public class MillMix {
         event.registerServerCommand(new CommandGetReputation());
         event.registerServerCommand(new CommandMillDebugExportWorld());
         event.registerServerCommand(new CommandDebugResetLoneBuildingsVillagers());
+        event.registerServerCommand(new CommandMillConfigReload());
     }
 
     @Mod.EventHandler
