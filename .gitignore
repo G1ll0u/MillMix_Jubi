@@ -21,3 +21,7 @@ build
 eclipse
 run
 libs
+/temp/
+/deploy.sh
+/millDecomp/
+/temp/
