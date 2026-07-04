@@ -9,6 +9,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import org.millenaire.common.config.MillConfigValues;
 import org.millenaire.common.forge.Mill;
+import vict.millmix.MillMixModConfig;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -60,9 +61,11 @@ public class CommandMillConfigReload implements ICommand {
             // Re-read custom config to apply user overrides on top
             readConfigFile.invoke(null, Mill.proxy.getCustomConfigFile(), false);
 
+            MillMixModConfig.reload();
+
             File customFile = Mill.proxy.getCustomConfigFile();
             sender.sendMessage(new TextComponentString(
-                    TextFormatting.GREEN + "[MillMix] Millénaire config reloaded from " + customFile.getName()
+                    TextFormatting.GREEN + "[MillMix] Millénaire and MillMix configs reloaded (Millénaire: " + customFile.getName() + ")"
             ));
         } catch (Exception e) {
             throw new CommandException("[MillMix] Failed to reload Millénaire config: " + e.getMessage());

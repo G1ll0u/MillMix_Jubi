@@ -1,8 +1,12 @@
 package vict.millmix.mixin.building;
 
+import org.millenaire.common.config.MillConfigValues;
 import org.millenaire.common.entity.MillVillager;
+import org.millenaire.common.utilities.MillCommonUtilities;
 import org.millenaire.common.utilities.MillLog;
 import org.millenaire.common.village.Building;
+import org.millenaire.common.village.BuildingLocation;
+import org.millenaire.common.village.VillagerRecord;
 import org.millenaire.common.world.MillWorldData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -10,19 +14,24 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
+import java.util.Map;
+
 @Mixin(Building.class)
 public abstract class MixinBuilding {
     @Shadow(remap = false)
     public MillWorldData mw;
+    @Shadow(remap = false)
+    public BuildingLocation location;
+
+    @Shadow(remap = false)
+    public abstract List<Building> getBuildings();
 
     /**
-     * Bug fix: when addAdult can't find a slot (type == null), the teenager stays in the village
-     * and retries every night action, causing infinite log spam and a perpetual retry loop.
-     * Removing the teenager from the village stops the loop. Worker conversion (males only) is
-     * handled upstream by Travellers' HEAD injection, which cancels before this point is reached.
+     * idea: remove some log spam, it's ugly but the cause of this log spam does not break the game.
      *
      * @author Jubitus
-     * @reason Fix stuck teenager infinite retry loop
+     * @reason Log spam
      */
     @Inject(
             method = "addAdult",
@@ -35,17 +44,23 @@ public abstract class MixinBuilding {
             cancellable = true,
             remap = false
     )
-    private void handleTeenagerWithNoSlot(MillVillager child, CallbackInfo ci) {
-        // No adult slot available for this teenager. Remove them from the village so they
-        // don't retry every night forever. Travellers' mixin handles worker conversion for
-        // male teenagers and cancels before this point, so we only reach here for females
-        // or when Travellers is absent.
-        try {
-            this.mw.removeVillagerRecord(child.getVillagerId());
-            child.despawnVillagerSilent();
-        } catch (Exception e) {
-            MillLog.error(this, "[MillMix] Failed to remove stuck teenager " + child + ": " + e);
+    private void replaceErrorLog(MillVillager child, CallbackInfo ci) {
+        // Your condition:
+        if (MillConfigValues.LogBuildingPlan >= 1) {
+            MillLog.error(this, "Villager types: " + (child.gender == 1 ? MillCommonUtilities.flattenStrings(this.location.getMaleResidents()) : MillCommonUtilities.flattenStrings(this.location.getFemaleResidents())));
+            MillLog.error(this, "Villager types: " + (child.gender == 1 ? MillCommonUtilities.flattenStrings(this.location.getMaleResidents()) : MillCommonUtilities.flattenStrings(this.location.getFemaleResidents())));
+            String s = "";
+            for (VillagerRecord vr : this.getVillagerRecords().values()) {
+                s = s + vr.type + " ";
+            }
+
+            MillLog.error(this, "Current residents: " + s);
+        } else {
         }
+
         ci.cancel();
     }
+
+    @Shadow(remap = false)
+    public abstract Map<Long, VillagerRecord> getVillagerRecords();
 }

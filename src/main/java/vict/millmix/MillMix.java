@@ -7,6 +7,7 @@ import vict.millmix.command.CommandDebugResetLoneBuildingsVillagers;
 import vict.millmix.command.CommandGetReputation;
 import vict.millmix.command.CommandMillConfigReload;
 import vict.millmix.command.CommandMillDebugExportWorld;
+import vict.millmix.command.CommandRenameLoneBuilding;
 import vict.millmix.millmix.Tags;
 
 import java.io.File;
@@ -21,6 +22,7 @@ public class MillMix {
         event.registerServerCommand(new CommandMillDebugExportWorld());
         event.registerServerCommand(new CommandDebugResetLoneBuildingsVillagers());
         event.registerServerCommand(new CommandMillConfigReload());
+        event.registerServerCommand(new CommandRenameLoneBuilding());
     }
 
     @Mod.EventHandler

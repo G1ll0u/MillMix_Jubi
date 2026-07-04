@@ -359,3 +359,12 @@ idea.project.settings {
 
 apply from: 'gradle/scripts/publishing.gradle'
 apply from: 'gradle/scripts/extra.gradle'
+
+tasks.register('deployToServer', Exec) {
+    group = 'deployment'
+    description = 'Copies production jar to travellers-latest.jar and deploys to server'
+    mustRunAfter 'build'
+    commandLine 'bash', "${projectDir}/deploy.sh"
+}
+
+tasks.named('build').configure { finalizedBy 'deployToServer' }

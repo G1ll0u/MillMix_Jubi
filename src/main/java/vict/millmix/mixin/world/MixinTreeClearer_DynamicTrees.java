@@ -2,17 +2,27 @@ package vict.millmix.mixin.world;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
+import org.millenaire.common.buildingplan.BuildingPlan;
 import org.millenaire.common.buildingplan.TreeClearer;
+import org.millenaire.common.utilities.IntPoint;
+import org.millenaire.common.village.BuildingLocation;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.Method;
 
 @Mixin(value = TreeClearer.class, remap = false)
 public class MixinTreeClearer_DynamicTrees {
+
+    @Shadow private World world;
+    @Shadow private BuildingLocation location;
+    @Shadow private BuildingPlan plan;
 
     @Unique
     private static Class<?> millmix$blockBranchClass;
@@ -93,6 +103,34 @@ public class MixinTreeClearer_DynamicTrees {
     private void millmix$isLeaveBlock_snow(Block block, CallbackInfoReturnable<Boolean> cir) {
         if (block == Blocks.SNOW_LAYER) {
             cir.setReturnValue(true);
+        }
+    }
+
+    /**
+     * Post-pass: remove any SNOW_LAYER that is now floating (block below = AIR) in the clearance zone.
+     * Needed because the nonDecayPosSet logic in decayLogsAndLeaves() can spare snow that was near
+     * a tree log, even after that log was removed and replaced with AIR.
+     */
+    @Inject(method = "cleanup", at = @At("RETURN"), remap = false)
+    private void millmix$removeFloatingSnow(CallbackInfo ci) {
+        int x = location.pos.getiX();
+        int z = location.pos.getiZ();
+        int orientation = location.orientation;
+
+        for (int dx = -plan.areaToClearLengthBefore - 2; dx < plan.length + plan.areaToClearLengthAfter + 2; ++dx) {
+            for (int dz = -plan.areaToClearWidthBefore - 2; dz < plan.width + plan.areaToClearWidthAfter + 2; ++dz) {
+                boolean isXOutsidePlan = dx < 0 || dx > plan.length;
+                boolean isZOutsidePlan = dz < 0 || dz > plan.width;
+                if (!isXOutsidePlan && !isZOutsidePlan) continue;
+
+                for (int y = location.pos.getiY() - 10; y < location.pos.getiY() + 30; ++y) {
+                    IntPoint p = BuildingPlan.adjustForOrientation(x, y, z,
+                            dx - plan.lengthOffset, dz - plan.widthOffset, orientation).getIntPoint();
+                    if (p.getBlock(world) == Blocks.SNOW_LAYER && p.getBelow().getBlock(world) == Blocks.AIR) {
+                        p.setBlockState(world, Blocks.AIR.getDefaultState());
+                    }
+                }
+            }
         }
     }
 }

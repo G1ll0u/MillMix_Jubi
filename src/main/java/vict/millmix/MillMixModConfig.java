@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class MillMixModConfig {
     private static final String CONFIG_VERSION_KEY = "configVersion";
-    private static final String CURRENT_VERSION = "3.1";
+    private static final String CURRENT_VERSION = "3.2";
 
     public static boolean disableAllWalls = false;
     public static int maxWallTerrainHeightDiff;
@@ -20,8 +20,17 @@ public class MillMixModConfig {
     public static double ghostWalkSpeedBPS = 3.0;
     public static boolean ghostMovementDebug = false;
     public static boolean avoidAW2Structures = true;
+    public static boolean parallelPlanLoading = true;
+    public static int parallelPlanLoadingThreads = 0;
 
     private static Configuration config;
+
+    public static void reload() {
+        if (config == null) return;
+        config.load();
+        sync();
+        if (config.hasChanged()) config.save();
+    }
 
     public static void init(File configFile) {
         File parent = configFile.getParentFile();
@@ -123,8 +132,9 @@ public class MillMixModConfig {
                 "ghostMovementEnabled",
                 "Pathing",
                 true,
-                "If true, villagers outside the ghost view distance skip pathfinding and teleport to their\n" +
-                        "goal destination after the time it would have taken them to walk there.\n" +
+                "If true, villagers outside the ghost view distance skip A* pathfinding and walk\n" +
+                        "linearly toward their goal at walking speed. Goal completion still works because\n" +
+                        "Millenaire detects arrival by horizontal distance, not by path state.\n" +
                         "Greatly reduces server load when many villagers are active but unobserved."
         );
 
@@ -132,7 +142,7 @@ public class MillMixModConfig {
                 "ghostMovementViewDistance",
                 "Pathing",
                 160, 16, 1024,
-                "Radius in blocks around each player within which villagers use real pathfinding.\n" +
+                "Radius in blocks around each player within which villagers use real A* pathfinding.\n" +
                         "Outside this radius they use ghost movement. Default 160 = 10 chunks."
         );
 
@@ -140,16 +150,16 @@ public class MillMixModConfig {
                 "ghostMovementWalkSpeed",
                 "Pathing",
                 3.0f, 0.1f, 50.0f,
-                "Assumed villager walk speed in blocks/second used to calculate the ghost teleport delay.\n" +
-                        "Lower values make the teleport happen later (slower simulated walking).\n" +
-                        "Default 3.0 is a reasonable approximation for a standard Millénaire villager."
+                "Villager walk speed in blocks/second used for ghost movement.\n" +
+                        "Default 3.0 is a reasonable approximation for a standard Millenaire villager.\n" +
+                        "Can be set higher than real walking speed to help offscreen villagers keep up with their goals."
         );
 
         ghostMovementDebug = config.getBoolean(
                 "ghostMovementDebug",
                 "Pathing",
                 false,
-                "If true, logs ghost movement events (timer start, dest change, teleport) to stdout.\n" +
+                "If true, logs ghost movement events (position, destination, distance) to stdout.\n" +
                         "Rate-limited per villager to avoid spam. For debugging only."
         );
 
@@ -158,6 +168,23 @@ public class MillMixModConfig {
                 "Compat",
                 true,
                 "If true, Millénaire buildings/walls will not generate inside/overlapping the AW2's structure/town bounding boxes."
+        );
+
+        parallelPlanLoading = config.getBoolean(
+                "parallelPlanLoading",
+                "Performance",
+                true,
+                "If true, building plans (PNG files) within each culture are loaded in parallel.\n" +
+                        "Significantly reduces startup time with many culture addons installed.\n" +
+                        "Disable if you experience crashes or incorrect building layouts on startup."
+        );
+
+        parallelPlanLoadingThreads = config.getInt(
+                "parallelPlanLoadingThreads",
+                "Performance",
+                0, 0, 64,
+                "Number of threads used for parallel plan loading. 0 = auto (availableProcessors - 1).\n" +
+                        "Only used when parallelPlanLoading is true."
         );
     }
 
