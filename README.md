@@ -1,6 +1,7 @@
 # Fork of [Victimarius/millmix](https://github.com/Victimarius/millmix) that fixes and tweaks even more things in Millénaire 1.12.2 mod making it more immersive.
 
-![logo_x2048_1 1](https://github.com/user-attachments/assets/88d0609b-a271-4fb3-b1a9-7c833d87b633)
+<img width="256" height="256" alt="MillMix_v0 2" src="https://github.com/user-attachments/assets/ff98dc4a-5fae-45d6-ba56-7aa7e826694d" />
+
 
 ## Description
 
