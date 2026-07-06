@@ -2,7 +2,6 @@
 
 <img width="256" height="256" alt="MillMix_v0 2" src="https://github.com/user-attachments/assets/ff98dc4a-5fae-45d6-ba56-7aa7e826694d" />
 
-
 ## Description
 
 It's a mod that patches [Millenaire 8.x.x on 1.12.2](https://www.curseforge.com/minecraft/mc-mods/millenaire) with mixins, making it more immersive, more stable and lighter on performance. I forked it from Victimarius/millmix.
