@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class MillMixModConfig {
     private static final String CONFIG_VERSION_KEY = "configVersion";
-    private static final String CURRENT_VERSION = "3.2";
+    private static final String CURRENT_VERSION = "3.3";
 
     public static boolean disableAllWalls = false;
     public static int maxWallTerrainHeightDiff;
@@ -19,6 +19,8 @@ public class MillMixModConfig {
     public static int ghostViewDistance = 160;
     public static double ghostWalkSpeedBPS = 3.0;
     public static boolean ghostMovementDebug = false;
+    public static boolean promptVillageChunkUnload = true;
+    public static boolean lazyChestBuildingPosRepair = true;
     public static boolean avoidAW2Structures = true;
     public static boolean parallelPlanLoading = true;
     public static int parallelPlanLoadingThreads = 0;
@@ -131,7 +133,7 @@ public class MillMixModConfig {
         ghostMovementEnabled = config.getBoolean(
                 "ghostMovementEnabled",
                 "Pathing",
-                true,
+                false,
                 "If true, villagers outside the ghost view distance skip A* pathfinding and walk\n" +
                         "linearly toward their goal at walking speed. Goal completion still works because\n" +
                         "Millenaire detects arrival by horizontal distance, not by path state.\n" +
@@ -161,6 +163,30 @@ public class MillMixModConfig {
                 false,
                 "If true, logs ghost movement events (position, destination, distance) to stdout.\n" +
                         "Rate-limited per villager to avoid spam. For debugging only."
+        );
+
+        promptVillageChunkUnload = config.getBoolean(
+                "promptVillageChunkUnload",
+                "Pathing",
+                true,
+                "If true, village chunks are queued for unload as soon as Millenaire releases its\n" +
+                        "chunkloading tickets (player beyond keep_active_radius + 32), instead of lingering\n" +
+                        "loaded until the next world save. Vanilla 1.12 only sweeps such chunks during\n" +
+                        "saveAllChunks, so with an infrequent autosave villages would stay active for minutes."
+        );
+
+        lazyChestBuildingPosRepair = config.getBoolean(
+                "lazyChestBuildingPosRepair",
+                "Pathing",
+                true,
+                "If true, the chest buildingPos repair pass in Building's resource manager\n" +
+                        "(readFromNBT) skips chests whose chunk is not already loaded in memory, instead\n" +
+                        "of force-loading it. Without this, Millenaire synchronously loads a chunk per\n" +
+                        "registered chest of every building of every village at world start, regardless of\n" +
+                        "player proximity - on worlds with hundreds of villages this is the single biggest\n" +
+                        "cause of slow world load and of chunks staying resident right after startup.\n" +
+                        "buildingPos is already set when a chest is placed and persisted in its own NBT,\n" +
+                        "so this repair is a rare-desync safety net, not something needed on every load."
         );
 
         avoidAW2Structures = config.getBoolean(

@@ -5,6 +5,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.millenaire.common.config.MillConfigValues;
 import org.millenaire.common.entity.MillVillager;
 import org.millenaire.common.utilities.Point;
 import org.millenaire.common.village.Building;
@@ -96,6 +97,19 @@ public abstract class MixinMillVillager_GhostMovement {
 
         mill_ghostWasActive = true;
 
+        // Beyond keep_active_radius the village is meant to unload its chunks. Any
+        // block read from here would defeat that: in 1.12 getLoadedChunk resets
+        // unloadQueued, so per-tick reads cancel the pending unload forever and the
+        // village stays active ("Kept alive by:" nobody). Freeze instead — no reads,
+        // no movement — and let the chunks unload; the villager freezes with them,
+        // exactly like vanilla. The restore snap fixes his position when he returns.
+        if (!mill_isVillageKeptActive(self)) {
+            self.getNavigator().clearPath();
+            self.pathEntity = null;
+            ci.cancel();
+            return;
+        }
+
         double dx = dest.x - self.posX;
         double dz = dest.z - self.posZ;
         double horizDistSq = dx * dx + dz * dz;
@@ -107,6 +121,16 @@ public abstract class MixinMillVillager_GhostMovement {
 
             double nx = self.posX + dx * ratio;
             double nz = self.posZ + dz * ratio;
+
+            // Never walk into (or read) an unloaded chunk: getBlockState would
+            // force-load it synchronously. Wait at the border instead; Millénaire's
+            // real pathfinding refuses unloaded chunks too (ChunkAccessException).
+            if (!mill_isColumnLoaded(self.world, nx, nz)) {
+                self.getNavigator().clearPath();
+                self.pathEntity = null;
+                ci.cancel();
+                return;
+            }
             double ny = mill_walkY(self, nx, nz, dest);
 
             if (MillMixModConfig.ghostMovementDebug) {
@@ -256,6 +280,7 @@ public abstract class MixinMillVillager_GhostMovement {
     @Unique
     private int mill_findStandY(World world, double x, double refY, double z, int upRange) {
         if (refY == MILL_NO_STAND) return MILL_NO_STAND;
+        if (!mill_isColumnLoaded(world, x, z)) return MILL_NO_STAND;
         int bx = MathHelper.floor(x);
         int bz = MathHelper.floor(z);
         int baseY = MathHelper.floor(refY);
@@ -296,6 +321,40 @@ public abstract class MixinMillVillager_GhostMovement {
             if (!world.getBlockState(pos).getMaterial().blocksMovement()) return false;
         }
         return true;
+    }
+
+    /**
+     * True when a chunk is already loaded, with no side effects: goes through
+     * chunkExists (a map lookup) rather than getLoadedChunk, which would reset the
+     * chunk's unloadQueued flag and block unloading.
+     */
+    @Unique
+    private boolean mill_isColumnLoaded(World world, double x, double z) {
+        return world.isBlockLoaded(new BlockPos(MathHelper.floor(x), 64, MathHelper.floor(z)), false);
+    }
+
+    /**
+     * Mirrors Millénaire's own keep-active rule (Building.updateBuildingServer):
+     * a village unloads once no player is within KeepActiveRadius + 32 of the town
+     * hall. Ghost movement must stop working before that boundary, not fight it.
+     */
+    @Unique
+    private boolean mill_isVillageKeptActive(MillVillager self) {
+        Building townHall = self.getTownHall();
+        double cx = self.posX, cy = self.posY, cz = self.posZ;
+        if (townHall != null && townHall.getPos() != null) {
+            Point pos = townHall.getPos();
+            cx = pos.x;
+            cy = pos.y;
+            cz = pos.z;
+        }
+        double radius = MillConfigValues.KeepActiveRadius + 32.0;
+        double radiusSq = radius * radius;
+        for (EntityPlayer p : self.world.playerEntities) {
+            double dx = p.posX - cx, dy = p.posY - cy, dz = p.posZ - cz;
+            if (dx * dx + dy * dy + dz * dz <= radiusSq) return true;
+        }
+        return false;
     }
 
     @Unique

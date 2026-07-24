@@ -64,6 +64,14 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
             return true;
         }
 
+        // The village's chunks can be force-unloaded (MillMix's promptVillageChunkUnload)
+        // in the same tick the villager's goal AI still runs (stale isActive). Writing to
+        // an unloaded chunk here would resurrect/regenerate it, replacing farmland with
+        // freshly generated (often air) terrain. Abort safely instead.
+        if (!millmix_isChunkLoaded(villager.world, villager.getGoalDestPoint())) {
+            return true;
+        }
+
         int taken = 0;
         if (this.seed != null) {
             // Try villager inventory first
@@ -148,6 +156,10 @@ public abstract class MixinGoalGenericPlantCrop extends MixinGoalGeneric {
 
     @Shadow(remap = false)
     public abstract Goal.GoalInformation getDestination(MillVillager villager) throws MillLog.MillenaireException;
+
+    private static boolean millmix_isChunkLoaded(World world, Point p) {
+        return world.isBlockLoaded(p.getBlockPos(), false);
+    }
 
 }
 

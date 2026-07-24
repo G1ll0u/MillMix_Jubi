@@ -16,6 +16,9 @@ import org.millenaire.common.village.Building;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +104,26 @@ public abstract class MixinGoalGenericHarvestCrop extends MixinGoalGeneric {
 
     @Shadow(remap = false)
     protected abstract boolean isValidHarvestSoil(World world, Point p);
+
+    /**
+     * idea: Guard against writing into chunks force-unloaded mid-tick
+     *
+     * @author Jubitus
+     * @reason The village's chunks can be force-unloaded (MillMix's promptVillageChunkUnload)
+     * in the same tick this goal's AI still runs (stale isActive). Letting the original
+     * performAction write to the crop block there would resurrect/regenerate the chunk,
+     * replacing farmland with freshly generated (often air) terrain. Abort safely instead.
+     */
+    @Inject(method = "performAction", at = @At("HEAD"), cancellable = true, remap = false)
+    private void millmix_guardChunkLoaded(MillVillager villager, CallbackInfoReturnable<Boolean> cir) {
+        if (!millmix_isChunkLoaded(villager.world, villager.getGoalDestPoint())) {
+            cir.setReturnValue(true);
+        }
+    }
+
+    private boolean millmix_isChunkLoaded(World world, Point p) {
+        return world.isBlockLoaded(p.getBlockPos(), false);
+    }
 
     /**
      * idea: Make villagers harvest crop slower
